@@ -12,7 +12,7 @@ struct Process* PrintMemoryInfo(DWORD processID)
 	HeadD = NULL;
 	TailD = NULL;
 
-    HANDLE hProcess;
+	HANDLE hProcess;
 	PROCESS_MEMORY_COUNTERS pmc;
 
 	// Open process in order to receive information
@@ -141,46 +141,208 @@ struct SnapShot* GetProcessesInfo(struct SnapShot* prevSnapShot)
 		return 1;
 	}
 
-	struct SnapShot* mySnapShot = (struct SnapShot*)malloc(sizeof(struct SnapShot));
-	if (mySnapShot == NULL)
+	// Calculate how many process identifiers were returned.
+	cProcesses = cbNeeded / sizeof(DWORD);
+
+	if (prevSnapShot == NULL)
+	{
+		struct SnapShot* mySnapShot = (struct SnapShot*)malloc(sizeof(struct SnapShot));
+		if (mySnapShot == NULL)
+		{
+			char* str = strerror(GetLastError());
+			LogError(str);
+
+			return;
+		}
+
+		// *Loop of all processes
+		for (i = 0; i < cProcesses; i++)
+		{
+			mySnapShot->process = PrintMemoryInfo(aProcesses[i]);
+
+			if (mySnapShot->process != NULL)
+			{
+				ProcessLinkedList(mySnapShot->process);
+				processCount++;
+			}
+
+			mySnapShot->processCount = processCount;
+		}
+
+		mySnapShot->process = HeadP;
+		return mySnapShot;
+	}
+
+	// For each Process to get its Memory Information
+
+	else if (prevSnapShot != NULL)
+	{
+		for (i = 0; i < cProcesses; i++)
+		{
+			AccumulateSnapShots(prevSnapShot, aProcesses[i]);
+		}
+
+		return prevSnapShot;
+	}
+}
+
+void AccumulateSnapShots(struct SnapShot* prevSnapShot, DWORD processID)
+{
+	struct Process* prevProcess = prevSnapShot->process;
+
+	HANDLE hProcess;
+	PROCESS_MEMORY_COUNTERS pmc;
+
+	HeadD = NULL;
+	TailD = NULL;
+
+	// Open process in order to receive information
+	hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |
+		PROCESS_VM_READ,
+		FALSE, processID);
+	if (NULL == hProcess)
+	{
+		char* str = strerror(GetLastError());
+		LogError(str);
+
+		return NULL;
+	}
+
+	struct Process* newProcess = (struct Process*)malloc(sizeof(struct Process));
+
+
+	newProcess->processID = processID;
+
+	HMODULE hMods[1024];
+	DWORD cbNeeded;
+	TCHAR FoundProcessName[MAX_PATH];
+	TCHAR wDllName[MAX_PATH];
+	size_t numConverted;
+
+	// Get Process Name
+	if (GetModuleFileNameEx(hProcess, 0, FoundProcessName, MAX_PATH))
+	{
+		// At this point, buffer contains the full path to the executable
+		char processName[MAX_PATH];
+		wcstombs_s(&numConverted, processName, MAX_PATH, FoundProcessName, MAX_PATH);
+		if (strlen(processName) > 1)
+		{
+			strcpy(newProcess->processName, processName);
+		}
+	}
+	else
 	{
 		char* str = strerror(GetLastError());
 		LogError(str);
 
 		return;
 	}
-
-	// Calculate how many process identifiers were returned.
-	cProcesses = cbNeeded / sizeof(DWORD);
-
-	// *Loop of all processes
-	for (i = 0; i < cProcesses; i++)
+	if (GetProcessMemoryInfo(hProcess, &pmc, sizeof(pmc)))
 	{
-		mySnapShot->process = PrintMemoryInfo(aProcesses[i]);
-
-		if (mySnapShot->process != NULL)
-		{
-			ProcessLinkedList(mySnapShot->process);
-			processCount++;
-		}
-
-		mySnapShot->processCount = processCount;
+		newProcess->memoryInfo.PageFaultCount = pmc.PageFaultCount;
+		newProcess->memoryInfo.WorkingSetSize = pmc.WorkingSetSize;
+		newProcess->memoryInfo.QuotaPagedPoolUsage = pmc.QuotaPagedPoolUsage;
+		newProcess->memoryInfo.QuotaPeakPagedPoolUsage = pmc.QuotaPeakPagedPoolUsage;
+		newProcess->memoryInfo.PagefileUsage = pmc.PagefileUsage;
 	}
 
-	mySnapShot->process = HeadP;
-
-	// For each Process to get its Memory Information
-
-	/*if (prevSnapShot != NULL)
+	int i = 0;
+	if (EnumProcessModules(hProcess, hMods, sizeof(hMods), &cbNeeded))
 	{
-		mySnapShot = AccumulateSnapShots(prevSnapShot, mySnapShot);
-	}*/
+		for (i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+		{
+			if (GetModuleFileNameEx(hProcess, hMods[i], wDllName, MAX_PATH))
+			{
+				struct Dll* dllName = (struct Dll*)malloc(sizeof(struct Dll));
+				if (dllName == NULL)
+				{
+					char* str = strerror(GetLastError());
+					LogError(str);
+					return;
+				}
 
-	return mySnapShot;
+				char getDllName[MAX_PATH];
+				wcstombs_s(&numConverted, getDllName, MAX_PATH, wDllName, MAX_PATH);
+				if (strlen(getDllName) > 1)
+				{
+					strcpy(dllName->DLLName, getDllName);
+					DllLinkedList(dllName);
+				}
+			}
+		}
+	}
+
+	newProcess->DLLCount = i;
+	newProcess->dll = HeadD;
+
+
+
+	struct Dll* tempDll = prevProcess->dll;
+	struct Dll* tempNewDll = newProcess->dll;
+
+	while (prevProcess != NULL)
+	{
+		if (prevProcess->processID == newProcess->processID)
+		{
+			prevProcess->memoryInfo.PageFaultCount += newProcess->memoryInfo.PageFaultCount;
+			prevProcess->memoryInfo.WorkingSetSize += newProcess->memoryInfo.WorkingSetSize;
+			prevProcess->memoryInfo.QuotaPagedPoolUsage += newProcess->memoryInfo.QuotaPagedPoolUsage;
+			prevProcess->memoryInfo.QuotaPeakPagedPoolUsage += newProcess->memoryInfo.QuotaPeakPagedPoolUsage;
+			prevProcess->memoryInfo.PagefileUsage += newProcess->memoryInfo.PagefileUsage;
+
+			while (tempNewDll != NULL)
+			{
+				prevProcess->dll = tempDll;
+				while (prevProcess->dll != NULL)
+				{
+					if (strcmp(prevProcess->dll->DLLName, newProcess->dll->DLLName) == 0)
+					{
+						break;
+					}
+
+					if (prevProcess->dll->next == NULL)
+					{
+						struct Dll* newDll = (struct Dll*)malloc(sizeof(struct Dll));
+						*newDll = *(newProcess->dll);
+						AddNewDllToLinkedList(prevProcess->dll, newDll);
+						prevSnapShot->process->DLLCount++;
+						break;
+					}
+
+					prevProcess->dll = prevProcess->dll->next;
+				}
+
+				tempNewDll = tempNewDll->next;
+			}
+
+			while (newProcess->dll != NULL)
+			{
+				tempNewDll = newProcess->dll; // Temp שומר על ראש הרשימה 
+				newProcess->dll = newProcess->dll->next;
+				free(tempNewDll);
+			}
+
+			free(newProcess);
+			break;
+		}
+
+		prevProcess = prevProcess->next;
+	}
+
+	if (prevProcess == NULL)
+	{
+		newProcess->dll = tempNewDll;
+		AddNewProcessToLinkedList(prevProcess->prev, newProcess); //שןלחת את הזנב כי אני מגיה לNULL
+		prevSnapShot->processCount++;
+	}
+
+
+	CloseHandle(hProcess);
 }
 
 
-void PrintProcessList()
+
+/*void PrintProcessList()
 {
 	struct Process* currentProcess = HeadP;
 
@@ -206,7 +368,7 @@ void PrintDLLList()
 		printf("%d: %s\n", i, currentDLL->DLLName);
 		currentDLL = currentDLL->next;
 	}
-}
+}*/
 
 
 

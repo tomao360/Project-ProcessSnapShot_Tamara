@@ -2,7 +2,8 @@
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(63,3): warning C4033: 'PrintMemoryInfo' must return a value
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(95,6): warning C4033: 'PrintMemoryInfo' must return a value
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(141,11): warning C4047: 'return': 'SnapShot *' differs in levels of indirection from 'int'
-C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(150,3): warning C4033: 'GetProcessesInfo' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(155,4): warning C4033: 'GetProcessesInfo' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(208,14): warning C4098: 'AccumulateSnapShots': 'void' function returning a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(187): warning C4715: 'GetProcessesInfo': not all control paths return a value
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(123): warning C4715: 'PrintMemoryInfo': not all control paths return a value
-C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(180): warning C4715: 'GetProcessesInfo': not all control paths return a value
   ProcessSnapShot Project.vcxproj -> C:\Users\97252\source\repos\ProcessSnapShot Project\x64\Debug\ProcessSnapShot Project.exe
