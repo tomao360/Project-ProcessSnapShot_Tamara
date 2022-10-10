@@ -127,18 +127,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BubbleSort.c" />
+    <ClCompile Include="Dictionary.c" />
     <ClCompile Include="LinkedLists.c" />
     <ClCompile Include="LogFile.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="MemoryTelemetry.c" />
     <ClCompile Include="ResetCollections.c" />
+    <ClCompile Include="SaveOrLoadFile.c" />
     <ClCompile Include="TakeSnapShot.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BubbleSort.h" />
+    <ClInclude Include="Dictionary.h" />
     <ClInclude Include="LinkedLists.h" />
     <ClInclude Include="LogFile.h" />
     <ClInclude Include="MemoryTelemetry.h" />
     <ClInclude Include="ResetCollections.h" />
+    <ClInclude Include="SaveOrLoadFile.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="TakeSnapShot.h" />
   </ItemGroup>

@@ -1,20 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include "LogFile.h"
-#include "LinkedLists.h"
-
+#include <Windows.h>
+#include <Psapi.h>
 
 struct SnapShot* GetProcessesInfo(struct SnapShot*);
 struct Process* PrintMemoryInfo(DWORD);
-//void DllLinkedList(struct Dll*);
-//void ProcessLinkedList(struct Process*);
-//struct SnapShot* AccumulateSnapShots(struct SnapShot*, struct SnapShot*);
+void PrintDLLList(struct Dll*);
+void PrintProcessList(struct Process*);
+void PrintProcessIDList(struct Process*);
 void AccumulateSnapShots(struct SnapShot*, DWORD);
-//void AddNewDllToLinkedList(struct Dll*, struct Dll*);
-//void AddNewProcessToLinkedList(struct Process*, struct Process*);
 
+//void Replace(struct Process*);
+//void BubbleSort();
 //void PrintProcessList();
 //void PrintDLLList();
 

@@ -1,4 +1,10 @@
+#include <stdio.h>
+#pragma warning(disable : 4996)
+
 #include "LinkedLists.h"
+#include "LogFile.h"
+#include "Structs.h"
+
 
 void DllLinkedList(struct Dll* currentDLL)
 {
@@ -41,6 +47,7 @@ void AddNewDllToLinkedList(struct Dll* prevDLL, struct Dll* currentDLL)
 	prevDLL->next = currentDLL;
 	currentDLL->prev = prevDLL;
 	currentDLL->next = NULL;
+	TailD = currentDLL;
 }
 
 void AddNewProcessToLinkedList(struct Process* prevProcess, struct Process* currentProcess)
@@ -48,12 +55,14 @@ void AddNewProcessToLinkedList(struct Process* prevProcess, struct Process* curr
 	prevProcess->next = currentProcess;
 	currentProcess->prev = prevProcess;
 	currentProcess->next = NULL;
+	TailP = currentProcess;
 }
 
 
+int snapShotIDCounter = 1;
 struct SnapShot* HeadS = NULL;
 struct SnapShot* TailS = NULL;
-void SnapShotLinkedList(struct SnapShot* currentSnapShot)
+struct SnapShot* SnapShotLinkedList(struct SnapShot* currentSnapShot)
 {
 	if (HeadS == NULL)
 	{
@@ -69,4 +78,7 @@ void SnapShotLinkedList(struct SnapShot* currentSnapShot)
 		currentSnapShot->next = NULL;
 		TailS = currentSnapShot;
 	}
+
+	snapShotIDCounter++;
+	return HeadS;
 }

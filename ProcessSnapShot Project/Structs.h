@@ -1,5 +1,5 @@
-#include <windows.h>
-#include <psapi.h>
+#include <Windows.h>
+#include <Psapi.h>
 
 struct Dll
 {
@@ -28,6 +28,7 @@ struct SnapShot
 {
 	struct Process* process;
 	int processCount;
+	int DllCountInSnap;
 	int sampleID;
 	char sampleTime[100];
 	struct SnapShot* next;
@@ -37,9 +38,35 @@ extern struct SnapShot* HeadS;
 extern struct SnapShot* TailS;
 
 
-/*struct Process_Header
+//struct Dll_Header
+//{
+//	int version;
+//	char reserved[100];
+//};
+//extern struct Dll_Header dllFileHeader;
+//
+//struct Process_Header
+//{
+//	int version;
+//	char reserved[100];
+//};
+//extern struct Process_Header processFileHeader;
+
+struct SnapShot_Header
 {
 	int version;
-	char reserved[1000];
+	int SnapShotCount;
+	char reserved[100];
 };
-struct Process_Header fileHeader;*/
+extern struct SnapShot_Header snapShotFileHeader;
+
+
+struct DLL_Dictionary
+{
+	char keyDLL[MAX_PATH];
+	struct Process* processDictionary;
+	struct Dictionary* next;
+	struct Dictionary* prev;
+};
+extern struct DLL_Dictionary* Head_Dictionary;
+extern struct DLL_Dictionary* Tail_Dictionary;

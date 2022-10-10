@@ -1,21 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+#pragma warning(disable : 4996)
+
 #include "ResetCollections.h"
+#include "LogFile.h"
+#include "Structs.h"
 
 
 void ResetCollections()
 {
 	struct SnapShot* currentSnapShot = HeadS;
 	struct SnapShot* releaseSnapShot;
-	struct Process* currentProcess = HeadP;
+	struct Process* currentProcess;
 	struct Process* releaseProcess;
-	struct Dll* currentDLL = HeadD;
+	struct Dll* currentDLL;
 	struct Dll* releaseDLL;
-
+	
 	while (currentSnapShot != NULL)
 	{
 		currentProcess = currentSnapShot->process;
+
 		while (currentProcess != NULL)
 		{
 			currentDLL = currentProcess->dll;
+
 			while (currentDLL != NULL)
 			{
 				releaseDLL = currentDLL;
@@ -32,6 +40,13 @@ void ResetCollections()
 		currentSnapShot = currentSnapShot->next;
 		free(releaseSnapShot);
 	}
+
+	HeadS = NULL;
+	TailS = NULL;
+	HeadP = NULL;
+	TailP = NULL;
+	HeadD = NULL;
+	TailD = NULL;
 }
 
 
