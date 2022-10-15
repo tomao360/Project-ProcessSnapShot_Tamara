@@ -47,6 +47,8 @@ void ResetCollections()
 	TailP = NULL;
 	HeadD = NULL;
 	TailD = NULL;
+
+	LogEvent("Reset Collections had finished");
 }
 
 

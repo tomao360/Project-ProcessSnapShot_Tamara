@@ -12,9 +12,11 @@
 #include "SaveOrLoadFile.h"
 #include "TakeSnapShot.h"
 #include "BubbleSort.h"
+#include "DictionaryDLL.h"
+#include "DictionaryProcess.h"
+#include "HelpForDebug.h"
 
-//struct Dll_Header dllFileHeader;
-//struct Process_Header processFileHeader;
+
 struct SnapShot_Header snapShotFileHeader;
 
 int main()
@@ -24,18 +26,14 @@ int main()
 	struct tm* timeinfo;
 	struct SnapShot* SnapShot = NULL;
 	struct SnapShot* SnapShotList = NULL;
+	struct DLL_Dictionary* DictionaryDll;
+	struct Process_Dictionary* DictionaryProcess;
 	char str[1000];
-	//int snapShotIDCounter = 0;
+	
 
 	//initialization of struct SnapShot_Header 
 	snapShotFileHeader.version = 1;
 	snapShotFileHeader.SnapShotCount = 0;
-	
-	////initialization of struct Process_Header
-	//processFileHeader.version = 1;
-
-	////initialization of struct Dll_Header
-	//dllFileHeader.version = 1;
 
 	char userResponse = NULL;
 	while (userResponse != 'E')
@@ -46,22 +44,24 @@ int main()
 		{
 		case '1': //Take One Process SnapShot
 			timeinfo = localtime(&t);
-			sprintf(str, "The Sample Time&Date: %02d.%02d.%d:%02d:%02d:%02d", timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+			sprintf(str, "The Sample Time&Date: %d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 			SnapShot = TakeOneSnapShot(NULL);
 			strcpy(SnapShot->sampleTime, str);
 			SnapShot->sampleID = snapShotIDCounter;
+			LogEvent("Start Bubble Sorting the linked list");
 			BubbleSort();
 			SnapShot->process = HeadP;
 			SnapShotList = SnapShotLinkedList(SnapShot);
 			snapShotFileHeader.SnapShotCount++;
-			//PrintProcessList();
+			//PrintProcessList();  //For Debug
 			break;
 		case '2': //Take 20 Process SnapShots for 20 seconds (accumulating the data) -> Gives 1 List 
 			timeinfo = localtime(&t);
-			sprintf(str, "The Sample Time&Date: %02d.%02d.%d:%02d:%02d:%02d", timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+			sprintf(str, "The Sample Time&Date: %d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 			SnapShot = Take20SnapShotsIn20Seconds();
 			strcpy(SnapShot->sampleTime, str);
 			SnapShot->sampleID = snapShotIDCounter;
+			LogEvent("Start Bubble Sorting the linked list");
 			BubbleSort();
 			SnapShot->process = HeadP;
 			SnapShotList = SnapShotLinkedList(SnapShot);
@@ -69,30 +69,38 @@ int main()
 			break;
 		case '3': //Start Long SnapShot (ends when the user presses '4')
 			timeinfo = localtime(&t);
-			sprintf(str, "The Sample Time&Date: %02d.%02d.%d:%02d:%02d:%02d", timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+			sprintf(str, "The Sample Time&Date: %d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 			SnapShot = TakeLongSnapShot();
 			strcpy(SnapShot->sampleTime, str);
 			SnapShot->sampleID = snapShotIDCounter;
+			LogEvent("Start Bubble Sorting the linked list");
 			BubbleSort();
 			SnapShot->process = HeadP;
 			SnapShotList = SnapShotLinkedList(SnapShot);
 			snapShotFileHeader.SnapShotCount++;
 			break;
 		case '5': //Generate HTML Report
-
+			LogEvent("Start making a DLL Dictionary");
+			DictionaryDll = MakeDllDictionary(SnapShotList);
+			LogEvent("Start making a Processes Dictionary");
+			DictionaryProcess = MakeProcessDictionary(SnapShotList);
+			NumOfDllInAllSnapShots(DictionaryDll);
+			NumOfProcessesInAllSnapShots(DictionaryProcess);
 			break;
 		case '6': //Reset Collections - Deleting all SanpShots from the memory
-			 ResetCollections();
+		    LogEvent("Start Reset Collections");
+			ResetCollections();
 			break;
 		case '7': //Save to File
 			SaveIntoFile();
+			snapShotFileHeader.SnapShotCount = 0;
 			break;
 		case '8': //Load from File
 			SnapShotList = LoadFromFile();
-			//PrintSnapShot();
+			//PrintSnapShot();  //For Debug
 			break;
 		case 'E': //Exit the program
-			printf("Thank you for using our program.\n");
+			printf("Thank you for using my program.\n");
 			break;
 
 		default:

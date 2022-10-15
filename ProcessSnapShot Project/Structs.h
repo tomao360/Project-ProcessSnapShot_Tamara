@@ -38,20 +38,6 @@ extern struct SnapShot* HeadS;
 extern struct SnapShot* TailS;
 
 
-//struct Dll_Header
-//{
-//	int version;
-//	char reserved[100];
-//};
-//extern struct Dll_Header dllFileHeader;
-//
-//struct Process_Header
-//{
-//	int version;
-//	char reserved[100];
-//};
-//extern struct Process_Header processFileHeader;
-
 struct SnapShot_Header
 {
 	int version;
@@ -65,8 +51,19 @@ struct DLL_Dictionary
 {
 	char keyDLL[MAX_PATH];
 	struct Process* processDictionary;
-	struct Dictionary* next;
-	struct Dictionary* prev;
+	struct DLL_Dictionary* next;
+	struct DLL_Dictionary* prev;
 };
-extern struct DLL_Dictionary* Head_Dictionary;
-extern struct DLL_Dictionary* Tail_Dictionary;
+extern struct DLL_Dictionary* HeadD_Dictionary;
+extern struct DLL_Dictionary* TailD_Dictionary;
+
+
+struct Process_Dictionary
+{
+	struct Process* processDictionarykey;
+	struct Process_Dictionary* next;
+	struct Process_Dictionary* prev;
+};
+
+extern struct Process_Dictionary* HeadP_Dictionary;
+extern struct Process_Dictionary* TailP_Dictionary;

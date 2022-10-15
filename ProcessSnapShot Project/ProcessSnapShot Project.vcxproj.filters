@@ -39,7 +39,16 @@
     <ClCompile Include="BubbleSort.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dictionary.c">
+    <ClCompile Include="DictionaryDLL.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpForDebug.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DictionaryProcess.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateHtml.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,7 +77,16 @@
     <ClInclude Include="BubbleSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Dictionary.h">
+    <ClInclude Include="DictionaryDLL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpForDebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DictionaryProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateHtml.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

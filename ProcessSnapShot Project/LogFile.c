@@ -13,10 +13,10 @@ void Log(char message[100])
 	timeinfo = localtime(&t);
 
 	char str[1000];
-	sprintf(str, "%02d.%02d.%d: %02d:%02d:%02d - %s\n", timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, message);
+	sprintf(str, "%d.%02d.%02d: %02d:%02d:%02d - %s\n", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, message);
 
 	char fileName[100];
-	sprintf(fileName, "Log_%02d.%02d.%d.log", timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_year + 1900);
+	sprintf(fileName, "Log_%d-%02d-%02d.log", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday);
 
 	FILE* f = fopen(fileName, "a");
 	if (f == NULL)
@@ -48,3 +48,6 @@ void LogWarning(char message[1000])
 	sprintf(str, "Warning - %s", message);
 	Log(str);
 }
+
+
+

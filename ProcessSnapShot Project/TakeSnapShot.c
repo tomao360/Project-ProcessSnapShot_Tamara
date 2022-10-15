@@ -13,13 +13,19 @@
 
 struct SnapShot* TakeOneSnapShot(struct SnapShot* prevSnapShot)
 {
+	LogEvent("Start taking One SnapShot");
+
 	struct SnapShot* singleSnapShot = GetProcessesInfo(prevSnapShot);
-	
+
+	LogEvent("Taking One SnapShot had finished");
+
 	return singleSnapShot;
 }
 
 struct SnapShot* Take20SnapShotsIn20Seconds()
 {
+	LogEvent("Start taking Twenty SnapShots");
+
 	struct SnapShot* singleSnapShot = NULL;
 
 	for (int i = 0; i < 20; i++)
@@ -28,11 +34,14 @@ struct SnapShot* Take20SnapShotsIn20Seconds()
 		Sleep(1000);
 	}
 
+	LogEvent("Taking Twenty SnapShots had finished");
+
 	return singleSnapShot;
 }
 
 struct SnapShot* TakeLongSnapShot()
 {
+	LogEvent("Start taking Long SnapShot");
 	struct SnapShot* singleSnapShot = NULL;
 
 	char stop = 0;
@@ -46,7 +55,67 @@ struct SnapShot* TakeLongSnapShot()
 			stop = getch();
 		}
 	}
+
+	LogEvent("End taking Long SnapShot");
 	
 	return singleSnapShot;
 }
+
+
+
+SIZE_T MemoryAverageInSnapShot(struct SnapShot* snapShotHead)
+{
+	struct Process* currentProcess = snapShotHead->process;
+
+	SIZE_T sum = 0;
+	SIZE_T avg;
+
+	while (currentProcess != NULL)
+	{
+		sum += currentProcess->memoryInfo.WorkingSetSize;
+		currentProcess = currentProcess->next;
+	}
+
+	avg = sum / snapShotHead->processCount;
+
+	return avg;
+}
+
+
+SIZE_T MemoryAverageInAllSnapShots(struct SnapShot* snapShotHead)
+{
+	struct SnapShot* currentSnapShot = snapShotHead;
+	struct Process* currentProcess = currentSnapShot->process;
+
+	SIZE_T sumMemory = 0;
+	int sumProcesses = 0;
+	SIZE_T avg;
+
+	while (currentSnapShot != NULL)
+	{
+		currentProcess = currentSnapShot->process;
+
+		while (currentProcess != NULL)
+		{
+			sumMemory += currentProcess->memoryInfo.WorkingSetSize;
+			currentProcess = currentProcess->next;
+		}
+
+		sumProcesses = sumProcesses + currentSnapShot->processCount;
+
+		currentSnapShot = currentSnapShot->next;	
+	}
+
+	avg = sumMemory / sumProcesses;
+
+	return avg;
+}
+
+
+
+
+
+
+
+
 

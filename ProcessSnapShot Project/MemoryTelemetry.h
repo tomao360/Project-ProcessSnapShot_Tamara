@@ -1,15 +1,9 @@
 #include <Windows.h>
 #include <Psapi.h>
 
-struct SnapShot* GetProcessesInfo(struct SnapShot*);
-struct Process* PrintMemoryInfo(DWORD);
-void PrintDLLList(struct Dll*);
-void PrintProcessList(struct Process*);
-void PrintProcessIDList(struct Process*);
-void AccumulateSnapShots(struct SnapShot*, DWORD);
+struct SnapShot* GetProcessesInfo(struct SnapShot* prevSnapShot);
+struct Process* PrintMemoryInfo(DWORD processID);
+void AccumulateSnapShots(struct SnapShot* prevSnapShot, DWORD processID);
 
-//void Replace(struct Process*);
-//void BubbleSort();
-//void PrintProcessList();
-//void PrintDLLList();
+
 

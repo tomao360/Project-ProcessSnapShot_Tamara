@@ -1,8 +1,8 @@
 
-void DllLinkedList(struct Dll*);
-void ProcessLinkedList(struct Process*);
-void AddNewDllToLinkedList(struct Dll*, struct Dll*);
-void AddNewProcessToLinkedList(struct Process*, struct Process*);
-struct SnapShot* SnapShotLinkedList(struct SnapShot*);
+void DllLinkedList(struct Dll* currentDLL);
+void ProcessLinkedList(struct Process* currentProcess);
+void AddNewDllToLinkedList(struct Dll* prevDLL, struct Dll* currentDLL);
+void AddNewProcessToLinkedList(struct Process* prevProcess, struct Process* currentProcess);
+struct SnapShot* SnapShotLinkedList(struct SnapShot* currentSnapShot);
 
 extern int snapShotIDCounter;

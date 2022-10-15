@@ -58,7 +58,7 @@ void AddNewProcessToLinkedList(struct Process* prevProcess, struct Process* curr
 	TailP = currentProcess;
 }
 
-
+//Initializing global variables
 int snapShotIDCounter = 1;
 struct SnapShot* HeadS = NULL;
 struct SnapShot* TailS = NULL;

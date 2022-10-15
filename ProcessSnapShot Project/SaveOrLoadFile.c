@@ -13,8 +13,8 @@ void SaveIntoFile()
 {
 	if (HeadS == NULL)
 	{
-		//the snapShotFileHeader not exists
-		printf("There are no existing Snapshots");
+		printf("There are no existing SnapShots");
+		LogError("There are no existing SnapShots");
 		return;
 	}
 
@@ -25,43 +25,43 @@ void SaveIntoFile()
 	FILE* f = fopen(fileName, "wb");
 	if (f == NULL)
 	{
-		//ERROR
+		char* str = strerror(GetLastError());
+		LogError(str);
+
+		printf("Error opening the file");
+
 		return;
 	}
 	else
 	{
+		LogEvent("Start saving the SnapShots into a file");
 		int write;
 		struct SnapShot* currentSnapShot = HeadS;
 		struct Process* currentProcess = currentSnapShot->process;
 		struct Dll* currentDLL = currentProcess->dll;
 
-		write = fwrite(&snapShotFileHeader, sizeof(struct SnapShot_Header), 1, f);
+		//Write the header to the file
+		write = fwrite(&snapShotFileHeader, sizeof(struct SnapShot_Header), 1, f); 
 		if (write == NULL)
 		{
-			//error
+			char* str = strerror(GetLastError());
+			LogError(str);
+
 			return;
 		}
-		//write = fwrite(&processFileHeader, sizeof(struct Process_Header), 1, f);
-		//if (write == NULL)
-		//{
-		//	//error
-		//	return;
-		//}
-		//write = fwrite(&dllFileHeader, sizeof(struct Dll_Header), 1, f);
-		//if (write == NULL)
-		//{
-		//	//error
-		//	return;
-		//}
-
+		
+		//Write the SnapShots to the file
 		for (int i = 0; i < snapShotFileHeader.SnapShotCount; i++)
 		{
 			write = fwrite(currentSnapShot, sizeof(struct SnapShot), 1, f);
 			if (write == NULL)
 			{
-				//error
+				char* str = strerror(GetLastError());
+				LogError(str);
+
 				return;
 			}
+
 			currentProcess = currentSnapShot->process;
 
 			while (currentProcess != NULL)
@@ -69,7 +69,9 @@ void SaveIntoFile()
 				write = fwrite(currentProcess, sizeof(struct Process), 1, f);
 				if (write == NULL)
 				{
-					//error
+					char* str = strerror(GetLastError());
+					LogError(str);
+
 					return;
 				}
 
@@ -80,9 +82,12 @@ void SaveIntoFile()
 					write = fwrite(currentDLL, sizeof(struct Dll), 1, f);
 					if (write == NULL)
 					{
-						//error
+						char* str = strerror(GetLastError());
+						LogError(str);
+
 						return;
 					}
+
 					currentDLL = currentDLL->next;
 				}
 
@@ -93,6 +98,8 @@ void SaveIntoFile()
 		}
 
 		fclose(f);
+	
+		LogEvent("Saving the SnapShots into file has finished");
 	}
 }
 
@@ -111,104 +118,126 @@ struct SnapShot* LoadFromFile()
 	FILE* f = fopen(fileName, "rb");
 	if (f == NULL)
 	{
-		//ERROR
+		char* str = strerror(GetLastError());
+		LogError(str);
+
+		printf("Error opening the file");
+
 		return;
 	}
 	else
 	{
+		LogEvent("Start loading a file and creating SnapShots");
+
 		int read;
 		struct SnapShot* currentSnapShot;
 		struct Process* currentProcess;
 		struct Dll* currentDLL;
 		struct SnapShot* SnapShotList = NULL;
 		
-		read = fread(&snapShotFileHeader, sizeof(struct SnapShot_Header), 1, f); //Read the header from the file
+		//Read the header from the file
+		read = fread(&snapShotFileHeader, sizeof(struct SnapShot_Header), 1, f); 
 		if (read == 0)
 		{
-			//ERROR
+			char* str = strerror(GetLastError());
+			LogError(str);
+
 			return;
 		}
-		//read = fread(&processFileHeader, sizeof(struct Process_Header), 1, f); //Read the header from the file
-		//if (read == 0)
-		//{
-		//	//ERROR
-		//	return;
-		//}
-		//read = fread(&dllFileHeader, sizeof(struct Dll_Header), 1, f); //Read the header from the file
-		//if (read == 0)
-		//{
-		//	//ERROR
-		//	return;
-		//}
-
-		for (int i = 0; i < snapShotFileHeader.SnapShotCount; i++) //Read the struct Item from the file
+		
+		//Read the SnapShots from the file
+		for (int i = 0; i < snapShotFileHeader.SnapShotCount; i++)
 		{
 			currentSnapShot = (struct SnapShot*)malloc(sizeof(struct SnapShot));
 			if (currentSnapShot == NULL)
 			{
-				//ERROR
+				char* str = strerror(GetLastError());
+				LogError(str);
+
 				return;
 			}
+
 			read = fread(currentSnapShot, sizeof(struct SnapShot), 1, f);
 			if (read == 0)
 			{
-				//ERROR
+				char* str = strerror(GetLastError());
+				LogError(str);
+
 				return;
 			}
 
 			currentProcess = (struct Process*)malloc(sizeof(struct Process));
 			if (currentProcess == NULL)
 			{
-				//ERROR
+				char* str = strerror(GetLastError());
+				LogError(str);
+
 				return;
 			}
+
 			for (int j = 0; j < currentSnapShot->processCount; j++)
 			{
 				read = fread(currentProcess, sizeof(struct Process), 1, f);
 				if (read == 0)
 				{
-					//ERROR
+					char* str = strerror(GetLastError());
+					LogError(str);
+
 					return;
 				}
+
 				currentDLL = (struct Dll*)malloc(sizeof(struct Dll));
 				if (currentDLL == NULL)
 				{
-					//ERROR
+					char* str = strerror(GetLastError());
+					LogError(str);
+
 					return;
 				}
+
 				for (int x = 0; x < currentProcess->DLLCount; x++)
 				{
 					read = fread(currentDLL, sizeof(struct Dll), 1, f);
 					if (read == 0)
 					{
-						//ERROR
+						char* str = strerror(GetLastError());
+						LogError(str);
+
 						return;
 					}
+
 					DllLinkedList(currentDLL);
+
 					currentDLL = (struct Dll*)malloc(sizeof(struct Dll));
 					if (currentDLL == NULL)
 					{
-						//ERROR
+						char* str = strerror(GetLastError());
+						LogError(str);
+
 						return;
 					}
 				}
 
-				currentProcess->dll = HeadD;
+				currentProcess->dll = HeadD; //Gets the HeadD of the DLL list
 				HeadD = NULL;
 				TailD = NULL;
 				free(currentDLL);
 
 				ProcessLinkedList(currentProcess);
+
 				currentProcess = (struct Process*)malloc(sizeof(struct Process));
 				if (currentSnapShot == NULL)
 				{
-					//ERROR
+					char* str = strerror(GetLastError());
+					LogError(str);
+
 					return;
 				}
 			}
 
-			currentSnapShot->process = HeadP;
+			currentSnapShot->process = HeadP;  //Gets the HeadP of the Processes list
 			free(currentProcess);
+
 			currentSnapShot->sampleID = snapShotIDCounter;
 			SnapShotList = SnapShotLinkedList(currentSnapShot);
 			HeadP = NULL;
@@ -216,44 +245,11 @@ struct SnapShot* LoadFromFile()
 		}
 
 		fclose(f);
+		LogEvent("File uploading and creating the SnapShots linked list has finished");
 		return SnapShotList;
 	}
 }
 
 
 
-void PrintSnapShot()
-{
-	struct SnapShot* currentSnapShot = HeadS;
-	struct Process* currentProcess;
-	struct Dll* currentDLL;
 
-	int P = 1;
-	int D = 1;
-
-	while (currentSnapShot != NULL)
-	{
-		printf("SnapDhot Number: %d\n", currentSnapShot->sampleID);
-
-		currentProcess = currentSnapShot->process;
-		P = 1;
-		while (currentProcess != NULL)
-		{
-			printf("\n#%d: Process: %s\n\n", P, currentProcess->processName);
-
-			currentDLL = currentProcess->dll;
-			D = 1;
-			while (currentDLL != NULL)
-			{
-				printf("#%d: Dll: %s\n", D, currentDLL->DLLName);
-				currentDLL = currentDLL->next;
-				D++;
-			}
-
-			currentProcess = currentProcess->next;
-			P++;
-		}
-
-		currentSnapShot = currentSnapShot->next;
-	}
-}

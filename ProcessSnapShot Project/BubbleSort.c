@@ -6,21 +6,23 @@
 #include "MemoryTelemetry.h"
 #include "LogFile.h"
 #include "Structs.h"
+#include "HelpForDebug.h"
 
-//Making swap between two Items
+
+//Making swap between two Processes
 void Replace(struct Process* dllCount)
 {
-	if (dllCount == NULL) //No Items in the list
+	if (dllCount == NULL) //No Processes in the list
 	{
-		//LogEventVal("No need to swap. There is no Items in the list.", item->num);
+		LogEvent("No need to swap. There are no Processes in the list.");
 		return;
 	}
-	else if (dllCount->next == NULL) //One Item in the list
+	else if (dllCount->next == NULL) //One Process in the list
 	{
-		//LogEventVal("No need to swap. There is only 1 Item in the list.", item->num);
+		LogEvent("No need to swap. There is only 1 Process in the list.");
 		return;
 	}
-	else if (dllCount == HeadP && dllCount->next == TailP) //2 Items in the list: Head and Tail
+	else if (dllCount == HeadP && dllCount->next == TailP) //2 Processes in the list: HeadP and TailP
 	{
 		dllCount->prev = TailP;
 		dllCount->next = NULL;
@@ -29,7 +31,7 @@ void Replace(struct Process* dllCount)
 		TailP = dllCount;
 		HeadP = dllCount->prev;
 	}
-	else if (dllCount == HeadP && dllCount->next != NULL) //2 first Items in the list
+	else if (dllCount == HeadP && dllCount->next != NULL) //2 first Processes in the list
 	{
 		dllCount->next = dllCount->next->next;
 		dllCount->next->prev->next = dllCount;
@@ -38,7 +40,7 @@ void Replace(struct Process* dllCount)
 		dllCount->next->prev = dllCount;
 		HeadP = dllCount->prev;
 	}
-	else if (dllCount->next == TailP && dllCount->prev != NULL) //2 last Items in the list
+	else if (dllCount->next == TailP && dllCount->prev != NULL) //2 last Processes in the list
 	{
 		dllCount->prev->next = dllCount->next;
 		dllCount->next->prev = dllCount->prev;
@@ -47,7 +49,7 @@ void Replace(struct Process* dllCount)
 		dllCount->next = NULL;
 		TailP = dllCount;
 	}
-	else //2 middle Items
+	else //2 middle Processes
 	{
 		dllCount->prev->next = dllCount->next;
 		dllCount->next = dllCount->next->next;
@@ -69,7 +71,7 @@ void BubbleSort()
 		return;
 	}
 
-	LogEvent("Swap Item");
+	LogEvent("Swap Process");
 	int counter = 1;
 	while (counter != 0)
 	{
@@ -89,8 +91,8 @@ void BubbleSort()
 		}
 	}
 
-	PrintProcessList(currentItem);
-	LogEvent("End sort list");
+	PrintProcessAndDllCountList(currentItem);
+	LogEvent("End Bubble sorting the linked list");
 }
 
 
