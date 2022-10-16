@@ -5,6 +5,7 @@
 #include "ResetCollections.h"
 #include "LogFile.h"
 #include "Structs.h"
+#include "LinkedLists.h"
 
 
 void ResetCollections()
@@ -47,9 +48,39 @@ void ResetCollections()
 	TailP = NULL;
 	HeadD = NULL;
 	TailD = NULL;
-
-	LogEvent("Reset Collections had finished");
+	snapShotIDCounter = 1;
 }
 
 
+void ResetDllDictionary()
+{
+	struct DLL_Dictionary* currentDll = HeadD_Dictionary;
+	struct DLL_Dictionary* releaseDll;
 
+	while (currentDll != NULL)
+	{
+		releaseDll = currentDll;
+		currentDll = currentDll->next;
+		free(releaseDll);
+	}
+
+	HeadD_Dictionary = NULL;
+	TailD_Dictionary = NULL;
+}
+
+
+void ResetProcessDictionary()
+{
+	struct Process_Dictionary* currentProcess = HeadP_Dictionary;
+	struct Process_Dictionary* releaseProcess;
+
+	while (currentProcess != NULL)
+	{
+		releaseProcess = currentProcess;
+		currentProcess = currentProcess->next;
+		free(releaseProcess);
+	}
+
+	HeadP_Dictionary = NULL;
+	TailP_Dictionary = NULL;
+}

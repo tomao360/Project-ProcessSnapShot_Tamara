@@ -13,6 +13,7 @@
 struct DLL_Dictionary* HeadD_Dictionary = NULL;
 struct DLL_Dictionary* TailD_Dictionary = NULL;
 
+int countOfProcess = 0;
 
 struct DLL_Dictionary* MakeDllDictionary(struct SnapShot* SnapShotHead)
 {
@@ -47,6 +48,7 @@ struct DLL_Dictionary* MakeDllDictionary(struct SnapShot* SnapShotHead)
 		currentSnapShot = currentSnapShot->next;
 	}
 
+	LogEvent("Making a DLL Dictionary had finished");
 	return HeadD_Dictionary;
 }
 
@@ -93,6 +95,10 @@ void AddToDllDictionary(char dllDictionary_key[MAX_PATH], struct Process* proces
 		TailD_Dictionary = currenDll;
 		currenDll->next = NULL;
 		currenDll->prev = NULL;
+
+		countOfProcess++;
+		currenDll->processCount = countOfProcess;
+		countOfProcess = 0;
 	}
 	else
 	{
@@ -100,7 +106,7 @@ void AddToDllDictionary(char dllDictionary_key[MAX_PATH], struct Process* proces
 		{
 			if (strcmp(headOfDictionary->keyDLL, currenDll->keyDLL) == 0)
 			{
-				AddNewProcessToDll(headOfDictionary->processDictionary, currenDll->processDictionary);
+				AddNewProcessToDll(headOfDictionary->processDictionary, currenDll->processDictionary, headOfDictionary);
 
 				free(currenDll->processDictionary);
 				free(currenDll);
@@ -112,20 +118,24 @@ void AddToDllDictionary(char dllDictionary_key[MAX_PATH], struct Process* proces
 				currenDll->prev = TailD_Dictionary;
 				currenDll->next = NULL;
 				TailD_Dictionary = currenDll;
+
+				countOfProcess++;
+				currenDll->processCount = countOfProcess;
+				countOfProcess = 0;
+
 				break;
 			}
 
 			headOfDictionary = headOfDictionary->next;
 		}
 	}
-
-	LogEvent("Making a DLL Dictionary had finished");
 }
 
 
-void AddNewProcessToDll(struct Process* currentProcess, struct Process* newProcessDict)
+void AddNewProcessToDll(struct Process* currentProcess, struct Process* newProcessDict, struct DLL_Dictionary* currenDllDict)
 {
 	struct Process* currentDictionaryP = currentProcess;
+	struct DLL_Dictionary* currenDll = currenDllDict;
 
 	while (currentDictionaryP != NULL)
 	{
@@ -152,12 +162,15 @@ void AddNewProcessToDll(struct Process* currentProcess, struct Process* newProce
 			newProcess->prev = currentDictionaryP;
 			newProcess->next = NULL;
 
+			currenDll->processCount = currenDll->processCount + 1;
+
 			break;
 		}
 
 		currentDictionaryP = currentDictionaryP->next;
 	}
 }
+
 
 
 int NumOfDllInAllSnapShots(struct DLL_Dictionary* snapShotHead)

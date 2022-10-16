@@ -1,488 +1,220 @@
-//#include <stdlib.h> 
-//#include <stdio.h>
-//#include <string.h>
-//#pragma warning(disable:4996)
-//
-//
-//#include "GenerateHtml.h"
-//#include "Structs.h"
-//#include "LogFile.h"
-//
-//FILE* file;
-//FILE* fileR;
-//int countOfCreateFileIndex2 = 1;
-//int countOfCreateFileIndex3 = 1;
-//
-//
-//// To know which file to open
-//char* newNameOfFile = 0;
-//
-//
-//int firstTimeInFile = 0;
-//int firstTimeHomePage = 0;
-//char seperator;
-//char nameFile[50] = "";
-//
-//#define SEPERATOR "</tbody>"
-//#define SEPERATOR_TITLE "</p>"
-//
-//
-//char* readFromFile()
-//{
-//	if (firstTimeInFile == 0 && strcmp(nameFile, "index.html") != 0)
-//	{
-//		fileR = fopen(nameFile, "r");
-//		if (!fileR)
-//		{
-//			return NULL;
-//		}
-//	}
-//	else if (firstTimeHomePage == 0 && firstTimeInFile == 0)
-//	{
-//		fileR = fopen(nameFile, "r");
-//		if (!fileR)
-//		{
-//			return NULL;
-//		}
-//	}
-//	else if (strcmp(nameFile, "index.html") == 0)
-//	{
-//		fileR = fopen("homePage.html", "r");
-//		if (!fileR)
-//		{
-//			//error
-//			return;
-//		}
-//	}
-//	else if (strcmp(nameFile, "index2.html") == 0)
-//	{
-//		fileR = fopen(newNameOfFile, "r");
-//		if (!fileR)
-//		{
-//			//error
-//			return;
-//		}
-//	}
-//	else if (strcmp(nameFile, "index3.html") == 0)
-//	{
-//		fileR = fopen(newNameOfFile, "r");
-//		if (!fileR)
-//		{
-//			//error
-//			return;
-//		}
-//	}
-//
-//	// Get the file size
-//	char* charCount = (char*)malloc(1000);
-//	if (!charCount)
-//	{
-//		return;
-//	}
-//
-//	char* read;
-//	int fileSize = 0;
-//
-//	while ((read = fgets(charCount, 1000, fileR)))
-//	{
-//		fileSize += strlen(charCount);
-//	}
-//
-//	free(charCount);
-//	fclose(fileR);
-//	fileSize++;
-//	//fileSize += 2;
-//
-//	// alloc space as file size
-//	char* inThefile = (char*)malloc(fileSize);
-//	if (!inThefile)
-//	{
-//		return 1;
-//	}
-//
-//
-//	if (firstTimeInFile == 0 && strcmp(nameFile, "index.html") != 0)
-//	{
-//		fileR = fopen(nameFile, "r");
-//		if (!fileR)
-//		{
-//			return NULL;
-//		}
-//	}
-//	else if (firstTimeHomePage == 0 && firstTimeInFile == 0)
-//	{
-//		firstTimeHomePage = 1;
-//		fileR = fopen(nameFile, "r");
-//		if (!fileR)
-//		{
-//			return NULL;
-//		}
-//	}
-//	else if (strcmp(nameFile, "index.html") == 0)
-//	{
-//		fileR = fopen("homePage.html", "r");
-//		if (!fileR)
-//		{
-//			//error
-//			return 0;
-//		}
-//	}
-//	else if (strcmp(nameFile, "index2.html") == 0)
-//	{
-//		fileR = fopen(newNameOfFile, "r");
-//		if (!fileR)
-//		{
-//			//error
-//			return 0;
-//		}
-//	}
-//	else if (strcmp(nameFile, "index3.html") == 0)
-//	{
-//		fileR = fopen(newNameOfFile, "r");
-//		if (!fileR)
-//		{
-//			//error
-//			return 0;
-//		}
-//	}
-//
-//	int readPosition = 0;
-//	char charToRead;
-//
-//	while ((charToRead = fgetc(fileR)) != EOF)
-//	{
-//		inThefile[readPosition] = charToRead;
-//		readPosition++;
-//	}
-//	inThefile[readPosition] = NULL;
-//
-//
-//	fclose(fileR);
-//
-//	return inThefile;
-//}
-//
-//
-//char* displaySnapShotInTable(struct SnapShot* snapShot_html, char* NameProcessHtml, int countDLLInSnapHTML, SIZE_T sizeOfMemoryHTML) 
-//{
-//
-//	char* lineInTable = (char*)malloc(sizeof(MAX_PATH));
-//	lineInTable[0] = NULL;
-//	if (!lineInTable)
-//	{
-//		//error
-//		return 1;
-//	}
-//	sprintf(lineInTable, "<tr>\n<td> %d </td>\n<td><a href =\"%s\" >Sample%d</a></td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n</tr>\n", snapShot_html->sampleID, NameProcessHtml, snapShot_html->sampleID, snapShot_html->processCount, countDLLInSnapHTML, sizeOfMemoryHTML);
-//	return lineInTable;
-//
-//
-//}
-//
-//char* displayDLLSInProcess(struct Process* htmlProcess) 
-//{
-//	struct Dll* DLLOption = htmlProcess->dll;
-//	char* lineInTable = (char*)malloc(sizeof(struct Dll) + 200);
-//	char* origin = lineInTable;
-//	if (!lineInTable)
-//	{
-//		//error
-//		return 1;
-//	}
-//	char* allTheOptions = (char*)malloc(sizeof(struct Dll) * htmlProcess->DLLCount + 10000);
-//	if (!allTheOptions)
-//	{
-//		//error
-//		return 1;
-//	}
-//	allTheOptions[0] = NULL;
-//	while (DLLOption != NULL)
-//	{
-//
-//		sprintf(lineInTable, "<option> %s </option>\n", DLLOption->DLLName);
-//		DLLOption = DLLOption->next;
-//		strcat(allTheOptions, lineInTable);
-//
-//
-//	}
-//
-//	free(origin);
-//	return allTheOptions;
-//}
-//
-//char* displayProcessesInTable(struct SnapShot* snapShot_html) 
-//{
-//
-//	struct Process* process = snapShot_html->process;
-//	char* lineInTable = (char*)malloc(sizeof(struct Process) * 1000);
-//	if (!lineInTable)
-//	{
-//		//error
-//		return 1;
-//	}
-//	char* allTheProcesses = (char*)malloc(sizeof(struct Process) * snapShot_html->processCount + 1000000);
-//	if (!allTheProcesses)
-//	{
-//		//error
-//		return 1;
-//	}
-//	allTheProcesses[0] = NULL;
-//	char* optionOfDLL = NULL;
-//	while (process != NULL)
-//	{
-//		optionOfDLL = displayDLLSInProcess(process);
-//		lineInTable[0] = NULL;
-//		sprintf(lineInTable, "<tr>\n<td> %s </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td> %d </td>\n<td><select>\n<option selected>dll's list</option>\n%s</select></td>\n</tr>", process->processName, process->processID, process->memoryInfo.PageFaultCount, process->memoryInfo.WorkingSetSize, process->memoryInfo.QuotaPagedPoolUsage, process->memoryInfo.QuotaPeakPagedPoolUsage, process->memoryInfo.PagefileUsage, process->DLLCount, optionOfDLL);
-//		process = process->next;
-//		strcat(allTheProcesses, lineInTable);
-//
-//	}
-//	free(lineInTable);
-//	free(optionOfDLL);
-//
-//	return allTheProcesses;
-//}
-//
-//
-//char* displayProcessesInTitle(struct SnapShot* snapShot_html) 
-//{
-//
-//	char* lineInTable = (char*)malloc(100);
-//	lineInTable[0] = NULL;
-//	if (!lineInTable)
-//	{
-//		//error
-//		return 1;
-//	}
-//	sprintf(lineInTable, "<h1> Samples List Number : %d At %s </h1>", snapShot_html->sampleID, snapShot_html->sampleTime);
-//	
-//	return lineInTable;
-//}
-//
-//
-////char* dynamicNav()
-////{
-////	char* dataNav = (char*)malloc(100);
-////	dataNav[0] = NULL;
-////	if (!dataNav)
-////	{
-////		//error
-////		return 1;
-////	}
-////	sprintf(dataNav, "\n<div> Dll's cnt: %d </div>\n<div> Processes cnt: %d </div>\n<div> Memory avg: %d </div>\n");
-////
-////	return dataNav;
-////}
-//
-//
-//char* dynamicHtml(char* nameOfFile, char* addString, char* topHtml)
-//{
-//	strcpy(nameFile, nameOfFile);
-//	char* dynamicTable = addString;
-//	char* htmlFileTemplate = readFromFile();
-//	firstTimeInFile = 1;
-//
-//	char* found = strstr(htmlFileTemplate, SEPERATOR);
-//	int len = found - htmlFileTemplate;
-//	char* newFileSpace;
-//
-//	if (topHtml == NULL)
-//	{
-//		newFileSpace = (char*)malloc(strlen(htmlFileTemplate) + 1 + strlen(dynamicTable));
-//		strncpy(newFileSpace, htmlFileTemplate, len);
-//		newFileSpace[len] = NULL;
-//	}
-//	else
-//	{
-//		newFileSpace = (char*)malloc(strlen(found) + strlen(topHtml) + 1 + strlen(dynamicTable));
-//		strcpy(newFileSpace, topHtml);
-//		free(topHtml);
-//	}
-//
-//	strcat(newFileSpace, dynamicTable);
-//	strcat(newFileSpace, found);
-//
-//	char* nameForFile = saveInToFileHTML(newFileSpace);
-//
-//
-//	free(htmlFileTemplate);
-//	//free(dynamicTable);
-//
-//
-//	return nameForFile;
-//}
-//
-//
-//
-//char* dynamicTitleHtml(char* nameOfFile, char* addString, char* title) {
-//
-//	newNameOfFile = createNewName(nameOfFile);
-//	strcpy(nameFile, nameOfFile);
-//	char* dynamicTitle = title;
-//	char* htmlFileTemplate = readFromFile();
-//
-//	char* found = strstr(htmlFileTemplate, SEPERATOR_TITLE);
-//	int len = found - htmlFileTemplate;
-//
-//	char* newFileSpace = (char*)malloc(strlen(htmlFileTemplate) + 1 + strlen(dynamicTitle));
-//	if (!newFileSpace)
-//	{
-//		//error
-//		return;
-//	}
-//
-//	strncpy(newFileSpace, htmlFileTemplate, len);
-//	newFileSpace[len] = NULL;
-//	strcat(newFileSpace, dynamicTitle);
-//	char* found_2 = strstr(htmlFileTemplate, SEPERATOR);
-//	int len_2 = found_2 - found;
-//	strncat(newFileSpace, found, len_2);
-//	newFileSpace[len_2 + len + strlen(dynamicTitle)] = NULL;
-//	char* linkName = dynamicHtml(nameOfFile, addString, newFileSpace);
-//
-//
-//	//free(dynamicTitle);
-//	free(htmlFileTemplate);
-//
-//	return linkName;
-//}
-//
-//
-//
-//char* saveInToFileHTML(char* newFile)
-//{
-//	//Enter the function PhotoCopying
-//	if (strcmp(nameFile, "index.html") == 0)
-//	{
-//		file = fopen("homePage.html", "w");
-//		if (!file)
-//		{
-//			//error - The file (PhotoCopying.html) did not open
-//			return 1;
-//		}
-//
-//		//The file (newName) was opened successfully
-//		fputs(newFile, file);
-//		fclose(file);
-//	}
-//	else if (strcmp(nameFile, "index2.html") == 0)
-//	{
-//		file = fopen(newNameOfFile, "w");
-//		if (!file)
-//		{
-//			//error - The file (PhotoCopying.html) did not open
-//			return 1;
-//		}
-//
-//		//The file (newName) was opened successfully
-//		fputs(newFile, file);
-//		fclose(file);
-//	}
-//	else if (strcmp(nameFile, "index3.html") == 0)
-//	{
-//		file = fopen(newNameOfFile, "w");
-//		if (!file)
-//		{
-//			//error - The file (PhotoCopying.html) did not open
-//			return 1;
-//		}
-//
-//		//The file (newName) was opened successfully
-//		fputs(newFile, file);
-//		fclose(file);
-//	}
-//	else
-//	{
-//		//no exist file
-//		printf("no exist file\n");
-//		return 1;
-//	}
-//
-//	free(newFile);
-//
-//	return newNameOfFile;
-//	//The file (PhotoCopying.html) is closed, the function PhotoCopying is finished
-//}
-//
-//
-//char* createNewName(char* nameOfOriginFile) {
-//
-//	char* newNameFile = (char*)malloc(30);
-//
-//	if (strcmp(nameOfOriginFile, "index2.html") == 0)
-//	{
-//		sprintf(newNameFile, "samplePage_%d.html", countOfCreateFileIndex2);
-//		countOfCreateFileIndex2++;
-//
-//		return newNameFile;
-//	}
-//	else if (strcmp(nameOfOriginFile, "index3.html") == 0)
-//	{
-//		sprintf(newNameFile, "useDll_%d.html", countOfCreateFileIndex3);
-//		countOfCreateFileIndex3++;
-//
-//		return newNameFile;
-//	}
-//	else
-//	{
-//		return NULL;
-//	}
-//}
-//
-//
-////struct SnapShot* addingDll(struct SnapShot* snapShotHead)
-////{
-////	struct Process* currentProcess = snapShotHead->process;
-////	struct Dll* currentDll;
-////
-////	int numberOfDll = 0;
-////
-////	while (currentProcess != NULL)
-////	{
-////		currentDll = currentProcess->dll;
-////
-////		while (currentDll != NULL)
-////		{
-////			numberOfDll++;
-////			currentDll = currentDll->next;
-////		}
-////	}
-////
-////	return numberOfDll;
-////}
-//
-//
-//struct SnapShot* memoryAverage(struct SnapShot* snapShotHead)
-//{
-//	struct Process* currentProcess = snapShotHead->process;
-//
-//	SIZE_T sum = 0;
-//	long avg;
-//
-//	while (currentProcess != NULL)
-//	{
-//		sum += currentProcess->memoryInfo.WorkingSetSize;
-//		currentProcess = currentProcess->next;
-//	}
-//
-//	avg = sum / snapShotHead->processCount;
-//
-//	return avg;
-//}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <Windows.h>
+#include <Psapi.h>
+#pragma warning(disable : 4996)
+
+#include "GenerateHTML.h"
+#include "LogFile.h"
+#include "Structs.h"
+#include "DictionaryDLL.h"
+#include "DictionaryProcess.h"
+#include "TakeSnapShot.h"
+
+
+void generateHtml()
+{
+	if (HeadS == NULL && HeadD_Dictionary == NULL)
+	{
+		printf("There are no SnapShots from which HTML files can be produced\n");
+		LogError("There are no SnapShots from which HTML files can be produced");
+
+		return;
+	}
+
+	HomePageHtml();
+	SampleTablePageHtml();
+	DllTablePageHtml();
+
+}
+
+
+void HomePageHtml()
+{
+	char htmlHomePage[10000];
+	
+	int numOfDll = NumOfDllInAllSnapShots(HeadD_Dictionary);
+	int numOfProcesses = NumOfProcessesInAllSnapShots(HeadP_Dictionary);
+	SIZE_T memoryAvgInSnapShots = MemoryAverageInAllSnapShots(HeadS);
+
+	struct SnapShot* currentSnapShot = HeadS;
+
+	struct DLL_Dictionary* currentDllDictionarySnap = HeadD_Dictionary;
+	int dllLineTableCounter = 1;
+
+	FILE* f = fopen("My Website\\homePage.html", "w");
+	if (f == NULL)
+	{
+		char* str = strerror(GetLastError());
+		LogError(str);
+
+		printf("Error opening the file");
+
+		return;
+	}
+
+	sprintf(htmlHomePage, "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"/><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/><title>ProcessSnapShot_Project-Tamara</title><link rel=\"stylesheet\" href=\"../My Website/CSS/style1.css\"/></head><body><header><nav><div><span class =\"nav-span\"><div>Dll Count: %d</div><div>Processes Count: %d</div><div>Memory Avg: %llu</div></span></div><ul class=\"nav-ul\"><li><button><img src=\"../My Website/images/home.svg\"/><a href=\"../My Website/homePage.html\">HOME</a></button></li><li><button><img src=\"../My Website/images/girl.svg\"/><a href=\"../My Website/about.html\">ABOUT ME</a></button></li></ul></nav></header><main><div class=\"left-main\"><div class=\"title\"><h3>SAMPLES LIST</h3></div><div><table class=\"left-table\"><thead><tr><th>ID</th><th>Link</th><th>Process Count</th><th>Dll Count</th><th>Menory Avg</th></tr></thead><tbody>", numOfDll, numOfProcesses, memoryAvgInSnapShots);
+	
+	fputs(htmlHomePage, f);
+
+	while (currentSnapShot != NULL)
+	{
+		sprintf(htmlHomePage, "<tr><td>%d</td><td class=\"td-link\"><a href=\"../My Website/SampleTablePage%d.html\">Sample%d.html</a></td><td>%d</td><td>%d</td><td>%llu</td></tr>", currentSnapShot->sampleID, currentSnapShot->sampleID, currentSnapShot->sampleID, currentSnapShot->processCount, currentSnapShot->DllCountInSnap, MemoryAverageInSnapShot(currentSnapShot));
+
+		fputs(htmlHomePage, f);
+
+		currentSnapShot = currentSnapShot->next;
+	}
+
+	sprintf(htmlHomePage, "</tbody></table></div></div><div class=\"right-main\"><div class=\"title\"><h3>DLL\'S LIST</h3></div><div><table class=\"right-table\"><thead><tr><th class=\"dll-name\">Dll Name</th><th>Link</th></tr></thead><tbody>");
+	fputs(htmlHomePage, f);
+
+	while (currentDllDictionarySnap != NULL)
+	{
+		sprintf(htmlHomePage, "<tr><td>%s</td><td class=\"td-link\"><a href=\"../My Website/DllTablePage%d.html\">DLL%d.html</a></td></tr>", currentDllDictionarySnap->keyDLL, dllLineTableCounter, dllLineTableCounter);
+
+		dllLineTableCounter++;
+		fputs(htmlHomePage, f);
+		
+		currentDllDictionarySnap = currentDllDictionarySnap->next;
+	}
+
+	sprintf(htmlHomePage, "</tbody></table></div></div></main></body></html>");
+	fputs(htmlHomePage, f);
+	fclose(f);
+}
 
 
 
-///////////////////////////////////////
-//firstTimeInFile = 0;
-//char* temporaryHTML = displayProcessesInTable(SnapShot);
-//char* temporaryTitle = displayProcessesInTitle(SnapShot);
-//char* linkToSample = dynamicTitleHtml("index2.html", temporaryHTML, temporaryTitle);
-////free(temporaryTitle);
-//free(temporaryHTML);
-//firstTimeInFile = 0;
-//char* dynamicLineHtml = displaySnapShotInTable(SnapShot, linkToSample, SnapShot->DllCountInSnap, memoryAverage(SnapShot));
-//free(linkToSample);
-//char* nameF = dynamicHtml("index.html", dynamicLineHtml, NULL);
-////free(nameF);
-////free(dynamicLineHtml);
-////////////////////////////////////////////
+void SampleTablePageHtml()
+{
+	char htmlSampleTablePage[10000];
+	char fileName[100];
+
+	struct SnapShot* currentfileSnap = HeadS;
+	struct Process* currentProcess = currentfileSnap->process;
+	struct Dll* currentDll = currentProcess->dll;
+
+	int trNum = 0;
+
+	while (currentfileSnap != NULL)
+	{
+		sprintf(fileName, "My Website\\SampleTablePage%d.html", currentfileSnap->sampleID);
+		FILE* f = fopen(fileName, "w");
+		if (f == NULL)
+		{
+			char* str = strerror(GetLastError());
+			LogError(str);
+
+			printf("Error opening the file");
+
+			return;
+		}
+	
+		SIZE_T processNumTr = ProcessWithHighestWorkingSetSize(currentfileSnap);
+		
+		sprintf(htmlSampleTablePage, "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"/><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/><title>ProcessSnapShot_Project-Tamara</title><link rel=\"stylesheet\" href=\"../My Website/CSS/style2.css\"/></head><body><header><nav><ul class=\"nav-ul\"><li><button><img src=\"../My Website/images/home.svg\"/><a href=\"../My Website/homePage.html\">HOME</a></button></li><li><button><img src=\"../My Website/images/girl.svg\"/><a href=\"../My Website/about.html\">ABOUT ME</a></button></li></ul></nav></header><main><div class=\"top-title\">");
+		fputs(htmlSampleTablePage, f);
+
+
+		sprintf(htmlSampleTablePage, "<h2>SAMPLES LIST NUMBER:%d AT %s</h2>", currentfileSnap->sampleID, currentfileSnap->sampleTime);
+		fputs(htmlSampleTablePage, f);
+
+		sprintf(htmlSampleTablePage, "</div><div class=\"table-title\"><h3>PROCESSES LIST</h3></div><div class=\"div-table\"><table class=\"table\"><thead><tr><th>Process Name</th><th>Process ID</th><th>PageFaultCount</th><th>WorkingSetSize</th><th>QuotaPagedPoolUsage</th><th>QuotaPeakPagedPoolUsage</th><th>PagefileUsage</th><th>Dll Count</th><th>Process\'s Dll List</th></tr></thead><tbody>");
+		fputs(htmlSampleTablePage, f);
+
+		currentProcess = currentfileSnap->process;;
+		while (currentProcess != NULL)
+		{
+			trNum++;
+
+			if (trNum == processNumTr)
+			{
+				sprintf(htmlSampleTablePage, "<tr><td>%s</td><td>%lu</td><td>%lu</td><td>%llu<script src=\"https://cdn.lordicon.com/pzdvqjsp.js\"></script><div class=\"warning-icon\"><lord-icon src=\"https://cdn.lordicon.com/wdqztrtx.json\"trigger=\"loop\"colors=\"primary:#f00000\"state=\"hover\"style=\"width: 30px; height: 30px\"></lord-icon></div></td><td>%llu</td><td>%llu</td><td>%llu</td><td>%d</td><td><select><option selected>Dll\'s List</option>", currentProcess->processName, currentProcess->processID, currentProcess->memoryInfo.PageFaultCount, currentProcess->memoryInfo.WorkingSetSize, currentProcess->memoryInfo.QuotaPagedPoolUsage, currentProcess->memoryInfo.QuotaPeakPagedPoolUsage, currentProcess->memoryInfo.PagefileUsage, currentProcess->DLLCount);
+				fputs(htmlSampleTablePage, f);
+			}
+			else
+			{
+				sprintf(htmlSampleTablePage, "<tr><td>%s</td><td>%lu</td><td>%lu</td><td>%llu</td><td>%llu</td><td>%llu</td><td>%llu</td><td>%d</td><td><select><option selected>Dll\'s List</option>", currentProcess->processName, currentProcess->processID, currentProcess->memoryInfo.PageFaultCount, currentProcess->memoryInfo.WorkingSetSize, currentProcess->memoryInfo.QuotaPagedPoolUsage, currentProcess->memoryInfo.QuotaPeakPagedPoolUsage, currentProcess->memoryInfo.PagefileUsage, currentProcess->DLLCount);
+				fputs(htmlSampleTablePage, f);
+			}
+			
+			currentDll = currentProcess->dll;
+			while (currentDll != NULL)
+			{
+				sprintf(htmlSampleTablePage, "<option>%s</option>", currentDll->DLLName);
+				fputs(htmlSampleTablePage, f);
+
+				currentDll = currentDll->next;
+			}
+
+			sprintf(htmlSampleTablePage, "</select></td></tr>");
+			fputs(htmlSampleTablePage, f);
+
+
+			currentProcess = currentProcess->next;
+		}
+
+		sprintf(htmlSampleTablePage, "</tbody></table></div></main></body></html>");
+		fputs(htmlSampleTablePage, f);
+
+		fclose(f);
+
+		trNum = 0;
+		currentfileSnap = currentfileSnap->next;
+	}
+}
+
+
+
+void DllTablePageHtml()
+{
+	char htmlDllTablePage[10000];
+	char fileName[100];
+
+	struct DLL_Dictionary* currentDllDictionarySnap = HeadD_Dictionary;
+	int dllLineTableCounter = 1;
+
+	while (currentDllDictionarySnap != NULL)
+	{
+		sprintf(fileName, "My Website\\DllTablePage%d.html", dllLineTableCounter);
+		FILE* f = fopen(fileName, "w");
+		if (f == NULL)
+		{
+			char* str = strerror(GetLastError());
+			LogError(str);
+
+			printf("Error opening the file");
+
+			return;
+		}
+
+		sprintf(htmlDllTablePage, "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"/><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/><title>ProcessSnapShot_Project-Tamara</title><link rel=\"stylesheet\" href=\"../My Website/CSS/style3.css\"/></head><body><header><nav><ul class=\"nav-ul\"><li><button><img src=\"../My Website/images/home.svg\"/><a href=\"../My Website/homePage.html\">HOME</a></button></li><li><button><img src=\"../My Website/images/girl.svg\"/><a href=\"../My Website/about.html\">ABOUT ME</a></button></li></ul></nav></header><main>	<div class=\"title\">");
+		fputs(htmlDllTablePage, f);
+
+		sprintf(htmlDllTablePage, "<h2>%d PROCESSES USED %s</h2>", currentDllDictionarySnap->processCount, currentDllDictionarySnap->keyDLL);
+		fputs(htmlDllTablePage, f);
+
+		sprintf(htmlDllTablePage, "</div><div><table class=\"table\"><thead><tr><th>Process Name</th><th>Process ID</th></tr></thead><tbody>");
+		fputs(htmlDllTablePage, f);
+
+		while (currentDllDictionarySnap->processDictionary != NULL)
+		{
+			sprintf(htmlDllTablePage, "<tr><td>%s</td><td>%lu</td></tr>", currentDllDictionarySnap->processDictionary->processName, currentDllDictionarySnap->processDictionary->processID);
+			fputs(htmlDllTablePage, f);
+
+			currentDllDictionarySnap->processDictionary = currentDllDictionarySnap->processDictionary->next;
+		}
+
+		sprintf(htmlDllTablePage, "</tbody></table></div></main></body></html>");
+		fputs(htmlDllTablePage, f);
+
+		fclose(f);
+
+		dllLineTableCounter++;
+		currentDllDictionarySnap = currentDllDictionarySnap->next;
+	}
+}
+
+

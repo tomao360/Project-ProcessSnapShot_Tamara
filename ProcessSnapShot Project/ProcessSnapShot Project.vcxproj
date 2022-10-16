@@ -130,8 +130,8 @@
     <ClCompile Include="BubbleSort.c" />
     <ClCompile Include="DictionaryDLL.c" />
     <ClCompile Include="DictionaryProcess.c" />
-    <ClCompile Include="GenerateHtml.c" />
     <ClCompile Include="HelpForDebug.c" />
+    <ClCompile Include="GenerateHTML.c" />
     <ClCompile Include="LinkedLists.c" />
     <ClCompile Include="LogFile.c" />
     <ClCompile Include="main.c" />
@@ -144,8 +144,8 @@
     <ClInclude Include="BubbleSort.h" />
     <ClInclude Include="DictionaryDLL.h" />
     <ClInclude Include="DictionaryProcess.h" />
-    <ClInclude Include="GenerateHtml.h" />
     <ClInclude Include="HelpForDebug.h" />
+    <ClInclude Include="GenerateHTML.h" />
     <ClInclude Include="LinkedLists.h" />
     <ClInclude Include="LogFile.h" />
     <ClInclude Include="MemoryTelemetry.h" />

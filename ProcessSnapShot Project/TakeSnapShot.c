@@ -103,7 +103,7 @@ SIZE_T MemoryAverageInAllSnapShots(struct SnapShot* snapShotHead)
 
 		sumProcesses = sumProcesses + currentSnapShot->processCount;
 
-		currentSnapShot = currentSnapShot->next;	
+		currentSnapShot = currentSnapShot->next;
 	}
 
 	avg = sumMemory / sumProcesses;
@@ -112,7 +112,33 @@ SIZE_T MemoryAverageInAllSnapShots(struct SnapShot* snapShotHead)
 }
 
 
+SIZE_T ProcessWithHighestWorkingSetSize(struct SnapShot* snapShotHead)
+{
+	struct SnapShot* currentSnapShot = snapShotHead;
+	struct Process* currentProcess = currentSnapShot->process;
+	struct Process* checkProcess = currentSnapShot->process->memoryInfo.WorkingSetSize;
+	SIZE_T processCheck = checkProcess;
+	int numCurrentProcess = 0;
+	int numCheckProcess = 0;
 
+
+	currentProcess = currentSnapShot->process;
+	while (currentProcess != NULL)
+	{
+		numCurrentProcess++;
+
+		if (currentProcess->memoryInfo.WorkingSetSize > processCheck)
+		{
+			processCheck = currentProcess->memoryInfo.WorkingSetSize;
+			numCheckProcess = numCurrentProcess;
+		}
+
+		currentProcess = currentProcess->next;
+
+	}
+
+	return numCheckProcess;
+}
 
 
 

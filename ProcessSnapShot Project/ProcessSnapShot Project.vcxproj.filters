@@ -48,7 +48,7 @@
     <ClCompile Include="DictionaryProcess.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GenerateHtml.c">
+    <ClCompile Include="GenerateHTML.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,7 +86,7 @@
     <ClInclude Include="DictionaryProcess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GenerateHtml.h">
+    <ClInclude Include="GenerateHTML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,8 +13,8 @@ void SaveIntoFile()
 {
 	if (HeadS == NULL)
 	{
-		printf("There are no existing SnapShots");
-		LogError("There are no existing SnapShots");
+		printf("There are no existing SnapShots to save in the program\n");
+		LogError("There are no existing SnapShots to save in the program");
 		return;
 	}
 

@@ -1,3 +1,25 @@
-﻿  main.c
-C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\main.c(38,1): warning C4047: 'initializing': 'char' differs in levels of indirection from 'void *'
+﻿  SaveOrLoadFile.c
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(44,11): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(45,20): warning C4047: '==': 'int' differs in levels of indirection from 'void *'
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(56,12): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(57,21): warning C4047: '==': 'int' differs in levels of indirection from 'void *'
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(69,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(70,22): warning C4047: '==': 'int' differs in levels of indirection from 'void *'
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(82,14): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(83,23): warning C4047: '==': 'int' differs in levels of indirection from 'void *'
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(126,3): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(139,10): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(145,4): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(157,5): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(160,11): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(166,5): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(175,5): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(180,12): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(186,6): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(195,6): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(200,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(206,7): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(217,7): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(234,6): warning C4033: 'LoadFromFile' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(251): warning C4715: 'LoadFromFile': not all control paths return a value
   ProcessSnapShot Project.vcxproj -> C:\Users\97252\source\repos\ProcessSnapShot Project\x64\Debug\ProcessSnapShot Project.exe

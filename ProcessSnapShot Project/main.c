@@ -15,6 +15,7 @@
 #include "DictionaryDLL.h"
 #include "DictionaryProcess.h"
 #include "HelpForDebug.h"
+#include "GenerateHTML.h"
 
 
 struct SnapShot_Header snapShotFileHeader;
@@ -44,7 +45,7 @@ int main()
 		{
 		case '1': //Take One Process SnapShot
 			timeinfo = localtime(&t);
-			sprintf(str, "The Sample Time&Date: %d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+			sprintf(str, "%d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 			SnapShot = TakeOneSnapShot(NULL);
 			strcpy(SnapShot->sampleTime, str);
 			SnapShot->sampleID = snapShotIDCounter;
@@ -57,7 +58,7 @@ int main()
 			break;
 		case '2': //Take 20 Process SnapShots for 20 seconds (accumulating the data) -> Gives 1 List 
 			timeinfo = localtime(&t);
-			sprintf(str, "The Sample Time&Date: %d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+			sprintf(str, "%d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 			SnapShot = Take20SnapShotsIn20Seconds();
 			strcpy(SnapShot->sampleTime, str);
 			SnapShot->sampleID = snapShotIDCounter;
@@ -69,7 +70,7 @@ int main()
 			break;
 		case '3': //Start Long SnapShot (ends when the user presses '4')
 			timeinfo = localtime(&t);
-			sprintf(str, "The Sample Time&Date: %d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+			sprintf(str, "%d.%02d.%02d: %02d:%02d:%02d", timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 			SnapShot = TakeLongSnapShot();
 			strcpy(SnapShot->sampleTime, str);
 			SnapShot->sampleID = snapShotIDCounter;
@@ -84,12 +85,15 @@ int main()
 			DictionaryDll = MakeDllDictionary(SnapShotList);
 			LogEvent("Start making a Processes Dictionary");
 			DictionaryProcess = MakeProcessDictionary(SnapShotList);
-			NumOfDllInAllSnapShots(DictionaryDll);
-			NumOfProcessesInAllSnapShots(DictionaryProcess);
+			generateHtml();
 			break;
 		case '6': //Reset Collections - Deleting all SanpShots from the memory
 		    LogEvent("Start Reset Collections");
 			ResetCollections();
+			ResetDllDictionary();
+			ResetProcessDictionary();
+			SnapShotList = NULL;
+			LogEvent("Reset Collections had finished");
 			break;
 		case '7': //Save to File
 			SaveIntoFile();
@@ -100,6 +104,10 @@ int main()
 			//PrintSnapShot();  //For Debug
 			break;
 		case 'E': //Exit the program
+			LogEvent("Exit the program");
+			ResetCollections();
+			ResetDllDictionary();
+			ResetProcessDictionary();
 			printf("Thank you for using my program.\n");
 			break;
 

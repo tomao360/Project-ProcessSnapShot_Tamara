@@ -50,6 +50,7 @@ extern struct SnapShot_Header snapShotFileHeader;
 struct DLL_Dictionary
 {
 	char keyDLL[MAX_PATH];
+	int processCount;
 	struct Process* processDictionary;
 	struct DLL_Dictionary* next;
 	struct DLL_Dictionary* prev;
