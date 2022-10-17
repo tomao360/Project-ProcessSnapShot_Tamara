@@ -17,7 +17,7 @@ struct SnapShot* TakeOneSnapShot(struct SnapShot* prevSnapShot)
 
 	struct SnapShot* singleSnapShot = GetProcessesInfo(prevSnapShot);
 
-	LogEvent("Taking One SnapShot had finished");
+	LogEvent("Taking One SnapShot has finished");
 
 	return singleSnapShot;
 }
@@ -34,7 +34,7 @@ struct SnapShot* Take20SnapShotsIn20Seconds()
 		Sleep(1000);
 	}
 
-	LogEvent("Taking Twenty SnapShots had finished");
+	LogEvent("Taking Twenty SnapShots has finished");
 
 	return singleSnapShot;
 }
@@ -62,7 +62,7 @@ struct SnapShot* TakeLongSnapShot()
 }
 
 
-
+//Calculates the average of the WorkingSetSize memory in one SnapShot
 SIZE_T MemoryAverageInSnapShot(struct SnapShot* snapShotHead)
 {
 	struct Process* currentProcess = snapShotHead->process;
@@ -82,6 +82,7 @@ SIZE_T MemoryAverageInSnapShot(struct SnapShot* snapShotHead)
 }
 
 
+//Calculates the average of the WorkingSetSize memory in all the SnapShots
 SIZE_T MemoryAverageInAllSnapShots(struct SnapShot* snapShotHead)
 {
 	struct SnapShot* currentSnapShot = snapShotHead;
@@ -112,6 +113,7 @@ SIZE_T MemoryAverageInAllSnapShots(struct SnapShot* snapShotHead)
 }
 
 
+//Finds the process with the highest WorkingSetSize in one SnapShot
 SIZE_T ProcessWithHighestWorkingSetSize(struct SnapShot* snapShotHead)
 {
 	struct SnapShot* currentSnapShot = snapShotHead;

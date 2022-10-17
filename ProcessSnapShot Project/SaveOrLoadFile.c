@@ -145,7 +145,7 @@ struct SnapShot* LoadFromFile()
 			return;
 		}
 		
-		//Read the SnapShots from the file
+		//Read the SnapShots from the file and create linked lists
 		for (int i = 0; i < snapShotFileHeader.SnapShotCount; i++)
 		{
 			currentSnapShot = (struct SnapShot*)malloc(sizeof(struct SnapShot));

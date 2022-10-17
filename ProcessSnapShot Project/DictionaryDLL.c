@@ -13,7 +13,7 @@
 struct DLL_Dictionary* HeadD_Dictionary = NULL;
 struct DLL_Dictionary* TailD_Dictionary = NULL;
 
-int countOfProcess = 0;
+int countOfProcess = 0;  //A variable that will help calculate the amount of processes for a key in the dictionary 
 
 struct DLL_Dictionary* MakeDllDictionary(struct SnapShot* SnapShotHead)
 {
@@ -48,12 +48,12 @@ struct DLL_Dictionary* MakeDllDictionary(struct SnapShot* SnapShotHead)
 		currentSnapShot = currentSnapShot->next;
 	}
 
-	LogEvent("Making a DLL Dictionary had finished");
+	LogEvent("Making a DLL Dictionary has finished");
 	return HeadD_Dictionary;
 }
 
 
-//Insert values into the dictionary: key and val
+//Insert values into the dictionary: key->DLl Name and val->Process
 void AddToDllDictionary(char dllDictionary_key[MAX_PATH], struct Process* processDictionary_val)
 {
 	struct DLL_Dictionary* currenDll = (struct DLL_Dictionary*)malloc(sizeof(struct DLL_Dictionary));
@@ -172,7 +172,7 @@ void AddNewProcessToDll(struct Process* currentProcess, struct Process* newProce
 }
 
 
-
+//Calculation of the amount of Dlls in SnapShots after a dictionary
 int NumOfDllInAllSnapShots(struct DLL_Dictionary* snapShotHead)
 {
 	struct DLL_Dictionary* currentDll = snapShotHead->keyDLL;

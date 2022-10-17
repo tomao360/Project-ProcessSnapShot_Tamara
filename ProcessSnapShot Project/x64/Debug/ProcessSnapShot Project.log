@@ -1,4 +1,21 @@
-﻿  SaveOrLoadFile.c
+﻿  DictionaryDLL.c
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\DictionaryDLL.c(24,3): warning C4033: 'MakeDllDictionary' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\DictionaryDLL.c(178,1): warning C4133: 'initializing': incompatible types - from 'char *' to 'DLL_Dictionary *'
+  DictionaryProcess.c
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\DictionaryProcess.c(23,3): warning C4033: 'MakeProcessDictionary' must return a value
+  GenerateHTML.c
+  main.c
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\main.c(39,1): warning C4047: 'initializing': 'char' differs in levels of indirection from 'void *'
+  MemoryTelemetry.c
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(64,5): warning C4033: 'PrintMemoryInfo' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(79,3): warning C4033: 'PrintMemoryInfo' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(117,7): warning C4033: 'PrintMemoryInfo' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(159,11): warning C4047: 'return': 'SnapShot *' differs in levels of indirection from 'int'
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(179,4): warning C4033: 'GetProcessesInfo' must return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(239,14): warning C4098: 'AccumulateSnapShots': 'void' function returning a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(268,15): warning C4098: 'AccumulateSnapShots': 'void' function returning a value
+  ResetCollections.c
+  SaveOrLoadFile.c
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(44,11): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(45,20): warning C4047: '==': 'int' differs in levels of indirection from 'void *'
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(56,12): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
@@ -21,5 +38,13 @@ C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\Save
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(206,7): warning C4033: 'LoadFromFile' must return a value
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(217,7): warning C4033: 'LoadFromFile' must return a value
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(234,6): warning C4033: 'LoadFromFile' must return a value
+  TakeSnapShot.c
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\TakeSnapShot.c(121,1): warning C4047: 'initializing': 'Process *' differs in levels of indirection from 'SIZE_T'
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\TakeSnapShot.c(122,1): warning C4047: 'initializing': 'SIZE_T' differs in levels of indirection from 'Process *'
+  Generating Code...
 C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\SaveOrLoadFile.c(251): warning C4715: 'LoadFromFile': not all control paths return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(143): warning C4715: 'PrintMemoryInfo': not all control paths return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\MemoryTelemetry.c(216): warning C4715: 'GetProcessesInfo': not all control paths return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\DictionaryProcess.c(44): warning C4715: 'MakeProcessDictionary': not all control paths return a value
+C:\Users\97252\source\repos\ProcessSnapShot Project\ProcessSnapShot Project\DictionaryDLL.c(53): warning C4715: 'MakeDllDictionary': not all control paths return a value
   ProcessSnapShot Project.vcxproj -> C:\Users\97252\source\repos\ProcessSnapShot Project\x64\Debug\ProcessSnapShot Project.exe

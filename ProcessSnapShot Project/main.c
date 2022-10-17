@@ -81,11 +81,13 @@ int main()
 			snapShotFileHeader.SnapShotCount++;
 			break;
 		case '5': //Generate HTML Report
+			LogEvent("Start generate HTML report");
 			LogEvent("Start making a DLL Dictionary");
 			DictionaryDll = MakeDllDictionary(SnapShotList);
 			LogEvent("Start making a Processes Dictionary");
 			DictionaryProcess = MakeProcessDictionary(SnapShotList);
 			generateHtml();
+			LogEvent("Generating HTML report has finished");
 			break;
 		case '6': //Reset Collections - Deleting all SanpShots from the memory
 		    LogEvent("Start Reset Collections");
@@ -93,7 +95,7 @@ int main()
 			ResetDllDictionary();
 			ResetProcessDictionary();
 			SnapShotList = NULL;
-			LogEvent("Reset Collections had finished");
+			LogEvent("Reset Collections has finished");
 			break;
 		case '7': //Save to File
 			SaveIntoFile();

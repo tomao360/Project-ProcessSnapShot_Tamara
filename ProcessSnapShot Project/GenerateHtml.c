@@ -30,6 +30,7 @@ void generateHtml()
 }
 
 
+//A function that creates a HomePage 
 void HomePageHtml()
 {
 	char htmlHomePage[10000];
@@ -86,7 +87,7 @@ void HomePageHtml()
 }
 
 
-
+//A function that creates a SamplePage (a table that contains SnapShot detailes)
 void SampleTablePageHtml()
 {
 	char htmlSampleTablePage[10000];
@@ -167,7 +168,7 @@ void SampleTablePageHtml()
 }
 
 
-
+//A function that creates a Dll Table Page (a page that contains a table with all the processes that used this Dll)
 void DllTablePageHtml()
 {
 	char htmlDllTablePage[10000];

@@ -91,7 +91,7 @@ struct Process* PrintMemoryInfo(DWORD processID)
 	}
 
 
-	// Get Dlls List
+	//Get Dlls List
 	int counterDLL = 0;
 	int i = 0;
 
@@ -99,14 +99,14 @@ struct Process* PrintMemoryInfo(DWORD processID)
 	{
 		for (i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
 		{
-			// Get the full path to the module's file.
+			//Get the full path to the module's file.
 			if (GetModuleFileNameEx(hProcess, hMods[i], wDllName, MAX_PATH))
 			{
-				// *Get the module name and handle value.
-				// Convert wChar to regular char array (string)
+				//*Get the module name and handle value.
+				//Convert wChar to regular char array (string)
 				char getDllName[MAX_PATH];
 				wcstombs_s(&numConverted, getDllName, MAX_PATH, wDllName, MAX_PATH);
-				if (strlen(getDllName) > 1)  //If the DLL name is less than 1 character, return NULL
+				if (strlen(getDllName) > 1)  //If the DLL name contains more than 1 character, add him to the linked list
 				{
 					struct Dll* dllName = (struct Dll*)malloc(sizeof(struct Dll));
 					if (dllName == NULL)
@@ -131,7 +131,7 @@ struct Process* PrintMemoryInfo(DWORD processID)
 	}
 
 	
-	if (i == 0)  // If there are no DLL's in the process
+	if (i == 0)  //If there are no DLL's in the process
 	{
 		myProcess->DLLCount = 0;
 		myProcess->dll = NULL;
@@ -145,13 +145,13 @@ struct Process* PrintMemoryInfo(DWORD processID)
 
 struct SnapShot* GetProcessesInfo(struct SnapShot* prevSnapShot)
 {
-	// Get Processes
+	//Get Processes
 	
-	// Receive all processes ID
-	DWORD aProcesses[1024], cbNeeded, cProcesses;  //DWORD aProcesses[1024] -> An array into which the process IDs will be entered
+	//Receive all processes ID
+	DWORD aProcesses[1024], cbNeeded, cProcesses;  //DWORD aProcesses[1024] -> An array into which the processes IDs will be entered
 	unsigned int i;
 
-	// *Receive all process ID and put in aProcesses Array
+	//*Receive all process ID and put in aProcesses Array
 	if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))  //The function inserts into the array the entire list of processes running in the system
 	{
 		LogError("There are no processes in the system");
@@ -159,7 +159,7 @@ struct SnapShot* GetProcessesInfo(struct SnapShot* prevSnapShot)
 		return 1;
 	}
 
-	// Calculate how many process identifiers were returned.
+	//Calculate how many process identifiers were returned
 	cProcesses = cbNeeded / sizeof(DWORD);
 
 	if (prevSnapShot == NULL) 
@@ -247,7 +247,7 @@ void AccumulateSnapShots(struct SnapShot* prevSnapShot, DWORD processID)
 	//Get Process Name
 	if (GetModuleFileNameEx(hProcess, 0, FoundProcessName, MAX_PATH))
 	{
-		// At this point, buffer contains the full path to the executable
+		//At this point, buffer contains the full path to the executable
 		char processName[MAX_PATH];
 		wcstombs_s(&numConverted, processName, MAX_PATH, FoundProcessName, MAX_PATH);
 		if (strlen(processName) > 1)   //If the process name is less than 1 character, return NULL
@@ -287,7 +287,7 @@ void AccumulateSnapShots(struct SnapShot* prevSnapShot, DWORD processID)
 		newProcess->memoryInfo.PagefileUsage = pmc.PagefileUsage;
 	}
 
-	// Get Dlls List
+	//Get Dlls List
 	int counterDLL = 0;
 	int i = 0;
 	if (EnumProcessModules(hProcess, hMods, sizeof(hMods), &cbNeeded))
@@ -298,7 +298,7 @@ void AccumulateSnapShots(struct SnapShot* prevSnapShot, DWORD processID)
 			{
 				char getDllName[MAX_PATH];
 				wcstombs_s(&numConverted, getDllName, MAX_PATH, wDllName, MAX_PATH);
-				if (strlen(getDllName) > 1)   //If the DLL name is less than 1 character, return NULL
+				if (strlen(getDllName) > 1)   //If the DLL name contains more than 1 character, add him to the linked list
 				{
 					struct Dll* dllName = (struct Dll*)malloc(sizeof(struct Dll));
 					if (dllName == NULL)
@@ -353,6 +353,7 @@ void AccumulateSnapShots(struct SnapShot* prevSnapShot, DWORD processID)
 						{
 							char* str = strerror(GetLastError());
 							LogError(str);
+
 							return;
 						}
 

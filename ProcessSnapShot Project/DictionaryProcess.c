@@ -39,12 +39,12 @@ struct Process_Dictionary* MakeProcessDictionary(struct SnapShot* SnapShotHead)
 		currentSnapShot = currentSnapShot->next;
 	}
 
-	LogEvent("Making a Processes Dictionary had finished");
+	LogEvent("Making a Processes Dictionary has finished");
 	return HeadP_Dictionary;
 }
 
 
-//Insert value into the dictionary: key
+//Insert value into the dictionary: key->Process
 void AddToProcessDictionary(struct Process* processDictionary_key)
 {
 	struct Process_Dictionary* currentProcess = (struct Process_Dictionary*)malloc(sizeof(struct Process_Dictionary));
@@ -106,6 +106,7 @@ void AddToProcessDictionary(struct Process* processDictionary_key)
 }
 
 
+//Calculation of the amount of Processes in SnapShots after a dictionary
 int NumOfProcessesInAllSnapShots(struct Process_Dictionary* snapShotHead)
 {
 	struct Process_Dictionary* currentProcess = snapShotHead;
