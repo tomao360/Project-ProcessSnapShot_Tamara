@@ -4,9 +4,88 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>ProcessSnapShot_Project-Tamara</title>
+    <link rel="stylesheet" href="CSS/aboutMe.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500;600&family=Nunito+Sans&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <p>hiiii</p>
+    <header>
+      <nav>
+        <ul class="nav-ul">
+          <li>
+            <button>
+              <img src="images/home.svg" /><a href="homePage.html">HOME</a>
+            </button>
+          </li>
+          <li>
+            <button>
+              <img src="images/girl.svg" /><a href="about.html">ABOUT ME</a>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div class="wrapper">
+        <div class="left-page">
+          <p class="hi">HI!</p>
+          <p>
+            My name is Tamara Osipov, I'm 28 years old, and I live in Hadera,
+            Israel.<br />
+            In my free time I like to watch docu-series, read, and travel.<br /><br />
+            I hope you liked my project.<br />I whould appreciate it if you send
+            me feedback about the project in the forum below.
+          </p>
+          <p class="thank-you">Thank You!</p>
+          <form action="https://formspree.io/f/mdojazna" method="POST">
+            <div>
+              <label for="name">Name</label>
+              <input
+                name="name"
+                type="text"
+                maxlength="30"
+                minlength="2"
+                required
+                autofocus
+              />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input name="email" type="email" required />
+            </div>
+            <div>
+              <label for="date">Date</label>
+              <input name="date" type="date" required />
+            </div>
+            <div>
+              <textarea name="text" cols="30" rows="10"></textarea>
+            </div>
+            <button class="btn" type="submit">Submit</button>
+            <button class="btn" type="reset">Clear</button>
+          </form>
+        </div>
+        <div class="right-page">
+          <p class="clip">Enjoy this video of friends</p>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/8w3wmQAMoxQ"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <p class="github-para">Click on the cat to go to my GitHub</p>
+          <a class="github-link" href="https://github.com/tomao360"
+            ><img src="images/github-loop.svg"
+          /></a>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

@@ -91,7 +91,7 @@ void BubbleSort()
 		}
 	}
 
-	PrintProcessAndDllCountList(currentItem);
+	//PrintProcessAndDllCountList(currentItem);  //For Debug
 	LogEvent("End Bubble sorting the linked list");
 }
 

@@ -53,7 +53,7 @@ struct Process* PrintMemoryInfo(DWORD processID)
 
 		char processName[MAX_PATH];
 		wcstombs_s(&numConverted, processName, MAX_PATH, FoundProcessName, MAX_PATH);
-		if (strlen(processName) > 1)  //If the process name is less than 1 character, return NULL
+		if (strlen(processName) > 0)  //If the process name does not contain characters, return NULL
 		{
 			myProcess = (struct Process*)malloc(sizeof(struct Process));
 			if (myProcess == NULL)
@@ -106,7 +106,7 @@ struct Process* PrintMemoryInfo(DWORD processID)
 				//Convert wChar to regular char array (string)
 				char getDllName[MAX_PATH];
 				wcstombs_s(&numConverted, getDllName, MAX_PATH, wDllName, MAX_PATH);
-				if (strlen(getDllName) > 1)  //If the DLL name contains more than 1 character, add him to the linked list
+				if (strlen(getDllName) > 0)  //If the DLL name contains more than 0 characters, add him to the linked list
 				{
 					struct Dll* dllName = (struct Dll*)malloc(sizeof(struct Dll));
 					if (dllName == NULL)
@@ -250,7 +250,7 @@ void AccumulateSnapShots(struct SnapShot* prevSnapShot, DWORD processID)
 		//At this point, buffer contains the full path to the executable
 		char processName[MAX_PATH];
 		wcstombs_s(&numConverted, processName, MAX_PATH, FoundProcessName, MAX_PATH);
-		if (strlen(processName) > 1)   //If the process name is less than 1 character, return NULL
+		if (strlen(processName) > 0)   //If the process name does not contain characters, return NULL
 		{
 			newProcess = (struct Process*)malloc(sizeof(struct Process));
 			if (newProcess == NULL)
@@ -298,7 +298,7 @@ void AccumulateSnapShots(struct SnapShot* prevSnapShot, DWORD processID)
 			{
 				char getDllName[MAX_PATH];
 				wcstombs_s(&numConverted, getDllName, MAX_PATH, wDllName, MAX_PATH);
-				if (strlen(getDllName) > 1)   //If the DLL name contains more than 1 character, add him to the linked list
+				if (strlen(getDllName) > 0)   //If the DLL name contains more than 0 characters, add him to the linked list
 				{
 					struct Dll* dllName = (struct Dll*)malloc(sizeof(struct Dll));
 					if (dllName == NULL)

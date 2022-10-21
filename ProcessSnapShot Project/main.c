@@ -39,7 +39,7 @@ int main()
 	char userResponse = NULL;
 	while (userResponse != 'E')
 	{
-		printf("\nPlease choose one of the following options:\n1-Take One Process SnapShot\n2-Take 20 Process SnapShots for 20 seconds (accumulating the data)\n3-Start Long SnapShot (ends when the user presses 'END')\n4-End Long SnapShot\n5-Generate HTML Report\n6-Reset Collections\n7-Save to File\n8-Load from File\n'E'-Exit the Program\n");
+		printf("\nPlease choose one of the following options:\n1-Take One Process SnapShot\n2-Take 20 Process SnapShots for 20 seconds (accumulating the data)\n3-Start Long SnapShot\n4-End Long SnapShot\n5-Generate HTML Report\n6-Reset Collections\n7-Save to File\n8-Load from File\n'E'-Exit the Program\n");
 		userResponse = getch();
 		switch (userResponse)
 		{
@@ -53,7 +53,6 @@ int main()
 			BubbleSort();
 			SnapShot->process = HeadP;
 			SnapShotList = SnapShotLinkedList(SnapShot);
-			snapShotFileHeader.SnapShotCount++;
 			//PrintProcessList();  //For Debug
 			break;
 		case '2': //Take 20 Process SnapShots for 20 seconds (accumulating the data) -> Gives 1 List 
@@ -66,7 +65,6 @@ int main()
 			BubbleSort();
 			SnapShot->process = HeadP;
 			SnapShotList = SnapShotLinkedList(SnapShot);
-			snapShotFileHeader.SnapShotCount++;
 			break;
 		case '3': //Start Long SnapShot (ends when the user presses '4')
 			timeinfo = localtime(&t);
@@ -78,7 +76,6 @@ int main()
 			BubbleSort();
 			SnapShot->process = HeadP;
 			SnapShotList = SnapShotLinkedList(SnapShot);
-			snapShotFileHeader.SnapShotCount++;
 			break;
 		case '5': //Generate HTML Report
 			LogEvent("Start generate HTML report");
@@ -88,18 +85,19 @@ int main()
 			DictionaryProcess = MakeProcessDictionary(SnapShotList);
 			generateHtml();
 			LogEvent("Generating HTML report has finished");
+			LogEvent("Start Reset Dll and Process Dictionaries");
+			ResetDllDictionary();
+			ResetProcessDictionary();
+			LogEvent("Reset Dll and Process Dictionaries has finished");
 			break;
 		case '6': //Reset Collections - Deleting all SanpShots from the memory
 		    LogEvent("Start Reset Collections");
 			ResetCollections();
-			ResetDllDictionary();
-			ResetProcessDictionary();
 			SnapShotList = NULL;
 			LogEvent("Reset Collections has finished");
 			break;
 		case '7': //Save to File
 			SaveIntoFile();
-			snapShotFileHeader.SnapShotCount = 0;
 			break;
 		case '8': //Load from File
 			SnapShotList = LoadFromFile();
@@ -108,8 +106,6 @@ int main()
 		case 'E': //Exit the program
 			LogEvent("Exit the program");
 			ResetCollections();
-			ResetDllDictionary();
-			ResetProcessDictionary();
 			printf("Thank you for using my program.\n");
 			break;
 

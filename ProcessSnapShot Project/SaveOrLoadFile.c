@@ -39,6 +39,7 @@ void SaveIntoFile()
 		struct SnapShot* currentSnapShot = HeadS;
 		struct Process* currentProcess = currentSnapShot->process;
 		struct Dll* currentDLL = currentProcess->dll;
+		snapShotFileHeader.SnapShotCount = snapShotIDCounter - 1;
 
 		//Write the header to the file
 		write = fwrite(&snapShotFileHeader, sizeof(struct SnapShot_Header), 1, f); 
@@ -134,6 +135,7 @@ struct SnapShot* LoadFromFile()
 		struct Process* currentProcess;
 		struct Dll* currentDLL;
 		struct SnapShot* SnapShotList = NULL;
+		snapShotFileHeader.SnapShotCount = 0;
 		
 		//Read the header from the file
 		read = fread(&snapShotFileHeader, sizeof(struct SnapShot_Header), 1, f); 
