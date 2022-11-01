@@ -109,3 +109,13 @@ td {
   max-width: 100px;
   overflow-x: auto;
 }
+
+@media screen and (max-width: 990px) {
+  .nav-ul {
+    padding-right: 10px;
+  }
+
+  .nav-ul > li > button {
+    margin-right: 13px;
+  }
+}

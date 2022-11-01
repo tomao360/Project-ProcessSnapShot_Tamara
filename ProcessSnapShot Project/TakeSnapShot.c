@@ -139,7 +139,7 @@ SIZE_T ProcessWithHighestWorkingSetSize(struct SnapShot* snapShotHead)
 
 	}
 
-	return numCheckProcess;
+	return numCheckProcess;  //Will return the number of the process with the highest WorkingSetSize
 }
 
 

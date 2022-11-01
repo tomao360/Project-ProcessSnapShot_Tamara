@@ -39,7 +39,7 @@ void SaveIntoFile()
 		struct SnapShot* currentSnapShot = HeadS;
 		struct Process* currentProcess = currentSnapShot->process;
 		struct Dll* currentDLL = currentProcess->dll;
-		snapShotFileHeader.SnapShotCount = snapShotIDCounter - 1;
+		snapShotFileHeader.SnapShotCount = snapShotIDCounter - 1;  //How many SnapShots to save
 
 		//Write the header to the file
 		write = fwrite(&snapShotFileHeader, sizeof(struct SnapShot_Header), 1, f); 
@@ -107,11 +107,6 @@ void SaveIntoFile()
 
 struct SnapShot* LoadFromFile()
 {
-	HeadP = NULL;
-	TailP = NULL;
-	HeadD = NULL;
-	TailD = NULL;
-	
 	char fileName[100];
 	printf("Please enter a file name: ");
 	scanf("%s", fileName);
@@ -122,12 +117,17 @@ struct SnapShot* LoadFromFile()
 		char* str = strerror(GetLastError());
 		LogError(str);
 
-		printf("Error opening the file");
+		printf("Error opening the file\n");
 
 		return;
 	}
 	else
 	{
+		HeadP = NULL;
+		TailP = NULL;
+		HeadD = NULL;
+		TailD = NULL;
+
 		LogEvent("Start loading a file and creating SnapShots");
 
 		int read;

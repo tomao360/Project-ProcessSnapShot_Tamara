@@ -80,9 +80,9 @@ int main()
 		case '5': //Generate HTML Report
 			LogEvent("Start generate HTML report");
 			LogEvent("Start making a DLL Dictionary");
-			DictionaryDll = MakeDllDictionary(SnapShotList);
+			DictionaryDll = MakeDllDictionary(HeadS);
 			LogEvent("Start making a Processes Dictionary");
-			DictionaryProcess = MakeProcessDictionary(SnapShotList);
+			DictionaryProcess = MakeProcessDictionary(HeadS);
 			generateHtml();
 			LogEvent("Generating HTML report has finished");
 			LogEvent("Start Reset Dll and Process Dictionaries");

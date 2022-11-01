@@ -155,3 +155,38 @@ td > a:hover {
 .right-table {
   width: 500px;
 }
+
+@media screen and (max-width: 990px) {
+  nav {
+    height: 90px;
+  }
+
+  .nav-ul {
+    padding-right: 10px;
+  }
+
+  .nav-ul > li > button {
+    margin-right: 13px;
+  }
+
+  .nav-span {
+    flex-direction: column;
+  }
+
+  .nav-span > div {
+    margin-top: 3px;
+  }
+
+  main {
+    flex-direction: column;
+    margin-top: 50px;
+  }
+
+  .left-table {
+    width: 480px;
+  }
+
+  .right-table {
+    width: 480px;
+  }
+}

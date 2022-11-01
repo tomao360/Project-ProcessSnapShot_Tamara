@@ -158,6 +158,7 @@ void AddNewProcessToDll(struct Process* currentProcess, struct Process* newProce
 			newProcess->memoryInfo = newProcessDict->memoryInfo;
 			newProcess->processID = newProcessDict->processID;
 
+			//Adding a new process to the list of processes of the DLL
 			currentDictionaryP->next = newProcess;
 			newProcess->prev = currentDictionaryP;
 			newProcess->next = NULL;
