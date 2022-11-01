@@ -62,6 +62,9 @@ header {
   margin-bottom: 40px;
   text-shadow: 5px 5px 10px #a3a3a3a0;
   margin-top: 30px;
+  word-wrap: break-word;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .table {
